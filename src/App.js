@@ -1,22 +1,13 @@
-import React, { useState } from "react";
-import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
-import { useEffect } from "react";
+import React from "react";
+import {Route, Routes} from 'react-router-dom'
+import OnboardingLeetcode from "./Pages/OnboardingLeetcode";
 
-
-const App = () =>{
-  const [googleAuthUri, setGoogleAuthUri] = useState("");
-
-  
-
-  useEffect(()=>{
-    getGoogleAuthUri();
-  },[]);  
-
-  return(
-    <>  
-      <h1>Helloworld</h1>
-    </>
-  )
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/leetcodeOnboarding" element={<OnboardingLeetcode/>}/>
+    </Routes>
+  );
 }
 
 export default App;
