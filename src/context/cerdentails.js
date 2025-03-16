@@ -5,6 +5,8 @@ export  const client_secret = "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";
 
 export  const redirect_uri = "http://localhost:3000/auth/google/callback";
 
+export const backend_url = 'http://localhost:5000'
+
 // module.exports = {
 //     client_id,client_secret, redirect_uri
 // }
