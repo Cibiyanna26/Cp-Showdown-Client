@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
+const webpack = require('webpack');
 module.exports = {
   entry: "./src/index.js", // Entry point of your application
   output: {
@@ -38,6 +38,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
     }),
+    new webpack.ProvidePlugin({
+      React:'react',
+    })
   ],
   resolve: {
     extensions: [".js"],
@@ -46,6 +49,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "dist"),
     },
+    historyApiFallback: true,
     port: 3000, // Port for the development server
     open: true, // Open the default web browser when the server starts
   },

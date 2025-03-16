@@ -1,3 +1,5 @@
+import React from "react"
+
 const OnboardingLeetcode = () => {
     return (
         <>
@@ -8,4 +10,4 @@ const OnboardingLeetcode = () => {
         </>
     )
 }
-export default OnboardingLeetcode
+export default OnboardingLeetcode;
