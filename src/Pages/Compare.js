@@ -21,25 +21,29 @@ const Compare = () => {
     const handleSubmit = async() => {
         try{
             setLeetcodeID(prev => prev.filter(item => item.userId != ''));
-            console.log(leetcodeID)
-            const response = await fetch(`${backend_url}/compare`,{
+            const usernames = leetcodeID.map((element)=>element.userId)
+            console.log(usernames)
+            const response = await fetch(`${backend_url}/compareLeetcode`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body : JSON.stringify({data:leetcodeID})
+                body : JSON.stringify({data:usernames})
             });
             const data = await response.json();
-            console.log("data = ",data, response.status)
+            console.log("data = ",data.data, response.status)
             if(response.status!=200){
                 alert(data.error)
                 return;
             }
             setLeetcodeID((prev) =>
-                prev.map((item, index) => ({
+                prev.map((item, index) => {
+                    console.log("---",data.data[index])
+                    return{
                     ...item,
                     score: data.data[index]?.score || "N/A"
-                }))
+                    };
+                })
             );
             console.log(leetcodeID)
         }catch(error){
