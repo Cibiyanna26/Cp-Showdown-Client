@@ -6,7 +6,7 @@ const isLoggedIn = async () => {
   }
   try {
     const response = await fetch(
-      `${BACKEND_LOCAL_HOST}/protected-route/v1/profile`,
+      `${BACKEND_LOCAL_HOST}/protected-route/profile`,
       {
         method: "get",
         headers: {

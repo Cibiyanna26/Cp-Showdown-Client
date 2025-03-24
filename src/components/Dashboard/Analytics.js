@@ -4,20 +4,19 @@ import { useEffect, useState } from "react";
 
 
 const Analytics = ({
-    usernames,
     results
 }) =>{
 
-    const [focusedUser, setFocusedUser] = useState(usernames[0]);
+    const [focusedUser, setFocusedUser] = useState(0);
     const [currentStats, setCurrentStats] = useState(null);
-    useEffect(()=>{
-        console.log("results", results)
-        const focusedUserScore = results.filter(element => {
-            return focusedUser == element.userId
-        });
-        setCurrentStats(focusedUserScore[0]);
-        console.log("current focused user score ",currentStats)
-    },[focusedUser])
+    const [radarResults, setRadarResults] = useState({
+      labels:['easy', 'medium', 'hard', 'easyAC', 'mediumAC','hardAC','rating'],
+      datasets:[]
+    })
+
+    // useEffect(() =>{
+
+    // }, [focusedUser])
 
     return (
       <>
@@ -29,18 +28,23 @@ const Analytics = ({
             backgroundPosition: "center",
           }}
         >
-          <div className="flex flex-col space-y-4 justify-center w-[900px] mx-auto mt-[80px]">
-            <div className="border-b border-tertiary flex justify-around p-[8px]">
-              {usernames &&
-                usernames.map((value, index) => {
+          <div className="flex flex-col space-y-4 w-[900px] mx-auto mt-[80px]">
+            <div className="border-b border-tertiary flex justify-around p-[8px]  mb-[40px]">
+              {results &&
+                results.map((value, index) => {
                   return (
                     <div key={index}>
-                      <button className={`${focusedUser == value ? 'text-primary' : "text-secondary"} text-xl font-bold transition`}
-                        onClick={()=>{
-                            setFocusedUser(usernames[index]);
+                      <button
+                        className={`${
+                          focusedUser == index
+                            ? "text-primary"
+                            : "text-secondary"
+                        } text-xl font-bold transition`}
+                        onClick={() => {
+                          setFocusedUser(index);
                         }}
                       >
-                        {value}
+                        {value?.userId}
                       </button>
                     </div>
                   );
@@ -48,13 +52,9 @@ const Analytics = ({
             </div>
             <div className="flex flex-row space-x-4">
               <div className="w-1/2">
-                <RadarChartComponent />
+                <RadarChartComponent usersData={results} focusedUser={focusedUser}/>
               </div>
-              <div className="w-1/2">
-                <ul>
-                  <li>helloworld</li>
-                </ul>
-              </div>
+              <div className="w-1/2">{}</div>
             </div>
           </div>
         </div>

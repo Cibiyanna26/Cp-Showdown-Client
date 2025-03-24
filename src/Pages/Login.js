@@ -6,7 +6,7 @@ import google_icon from '../assets/icons8-google 1.svg'
 import { BACKEND_LOCAL_HOST } from "../contexts/variables";
 
 async function getGoogleUri(){
-  var data = await fetch(`${BACKEND_LOCAL_HOST}/auth/v1`,{
+  var data = await fetch(`${BACKEND_LOCAL_HOST}/auth`,{
     method:"post"
   })
   data = await data.json();

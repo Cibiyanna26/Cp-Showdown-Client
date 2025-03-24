@@ -51,15 +51,19 @@ const Dashboard = () => {
    };
 
   const handleNewResults = (value) =>{
-    console.log(value)
+    console.log("new result values", value)
     setResult(value);
   }
 
 
   return (
     <>
-      <section className="landing page text-white">
-        <nav id="navbar" className="bg-transparent fixed top-0 w-full">
+      <section className="landing page text-white cursor-custom">
+        <nav
+          id="navbar"
+          className="bg-transparent fixed top-0 w-full"
+
+        >
           <div className="flex items-center justify-between py-[8px] px-[20px]">
             <div id="left-logo" className="flex flex-row items-center">
               <img className="w-[60px] h-[60px]" src={Logo}></img>
@@ -70,7 +74,7 @@ const Dashboard = () => {
             <div className="flex flex-row items-center space-x-4 p-[8px] rounded-xl text-white opacity-70 border-2">
               {userDetails ? (
                 <>
-                  <p>{userDetails.name}</p>
+                  <p>{userDetails?.name}</p>
                   <img
                     className="w-[30px] h-[30px] rounded-full"
                     src={leetcode_icon}
@@ -87,8 +91,14 @@ const Dashboard = () => {
             </div>
           </div>
         </nav>
-        <Hero usernames={usernames} addUser={addUser} removeUser={removeUser} handleUserChange={handleUserChange} handleNewResults={handleNewResults} />
-        <Comparision />
+        <Hero
+          usernames={usernames}
+          addUser={addUser}
+          removeUser={removeUser}
+          handleUserChange={handleUserChange}
+          handleNewResults={handleNewResults}
+        />
+        <Comparision usernames={usernames} results={results} />
         <Analytics usernames={usernames} results={results} />
         <Footer />
       </section>
