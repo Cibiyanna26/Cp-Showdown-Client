@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { backend_url } from "../context/cerdentails";
+import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+
+
 const Compare = () => {
     const [leetcodeID,setLeetcodeID] = useState([{userId:''}]);
     const addLeetcodeID = () => {
@@ -22,7 +24,7 @@ const Compare = () => {
         try{
             setLeetcodeID(prev => prev.filter(item => item.userId != ''));
             console.log(leetcodeID)
-            const response = await fetch(`${backend_url}/compare`,{
+            const response = await fetch(`${BACKEND_LOCAL_HOST}/auth/v1/compare`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
