@@ -1,70 +1,140 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Radar } from "react-chartjs-2";
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-} from "recharts";
-import mid_background from "../assets/mid-page-bg.png";
-// const data = [
-//   { subject: "GENERAL INFO", A: 90, B: 80, C: 85, fullMark: 100 },
-//   { subject: "PERFORMANCE", A: 70, B: 60, C: 65, fullMark: 100 },
-//   { subject: "BENCHMARKS", A: 50, B: 40, C: 45, fullMark: 100 },
-//   { subject: "MEMORY", A: 30, B: 50, C: 40, fullMark: 100 },
-//   { subject: "FEATURES", A: 80, B: 90, C: 85, fullMark: 100 },
-// ];
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const RadarChartComponent = () => {
-  const data = [
-    { subject: "EASY", A: 90, B: 80, C: 85, fullMark: 100 },
-    { subject: "MEDIUM", A: 70, B: 60, C: 65, fullMark: 100 },
-    { subject: "HARD", A: 50, B: 40, C: 45, fullMark: 100 },
-    { subject: "EASY_AC", A: 30, B: 50, C: 40, fullMark: 100 },
-    { subject: "MEDIUM_AC", A: 80, B: 90, C: 85, fullMark: 100 },
-    { subject: "HARD_AC", A: 50, B: 40, C: 45, fullMark: 100 },
-    { subject: "RATING", A: 30, B: 50, C: 40, fullMark: 100 },
-  ];
+// Register Chart.js components
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
+
+// Predefined colors for exactly 5 users
+const COLORS = [
+  { 
+    border: "#FFD700", 
+    background: "rgba(255, 215, 0, 0.3)", 
+    point: "#FFD700", 
+    activeBackground: "rgba(255, 215, 0, 0.6)" 
+  }, // Gold
+  { 
+    border: "#00FFFF", 
+    background: "rgba(0, 255, 255, 0.3)", 
+    point: "#00FFFF", 
+    activeBackground: "rgba(0, 255, 255, 0.6)" 
+  }, // Cyan
+  { 
+    border: "#DC143C", 
+    background: "rgba(220, 20, 60, 0.3)", 
+    point: "#DC143C", 
+    activeBackground: "rgba(220, 20, 60, 0.6)" 
+  }, // Crimson
+  { 
+    border: "#32CD32", 
+    background: "rgba(50, 205, 50, 0.3)", 
+    point: "#32CD32", 
+    activeBackground: "rgba(50, 205, 50, 0.6)" 
+  }, // Lime Green
+  { 
+    border: "#FF8C00", 
+    background: "rgba(255, 140, 0, 0.3)", 
+    point: "#FF8C00", 
+    activeBackground: "rgba(255, 140, 0, 0.6)" 
+  }, // Dark Orange
+];
+
+const RadarChart = ({ usersData, focusedUser }) => {
+  const [activeDataset, setActiveDataset] = useState(0);
+
+  // Map user data to dataset (using up to 5 predefined colors)
+  const datasets = usersData.slice(0, 5).map((value, index) => {
+    const color = COLORS[index];
+
+    return {
+      label: `User ${value?.userId}`,
+      data: [
+        value?.easy,
+        value?.medium,
+        value?.hard,
+        value?.easyAC,
+        value?.mediumAC,
+        value?.hardAC,
+        value?.rating / 10,
+      ],
+      backgroundColor: activeDataset === index ? color.activeBackground : color.background, 
+      borderColor: color.border,
+      borderWidth: activeDataset === index ? 3 : 2, // Highlight active user
+      pointBackgroundColor: color.point,
+      isActive: activeDataset === index, // Add a flag to identify the active dataset
+    };
+  });
+
+  // Ensure the active dataset is the first element
+  datasets.sort((a, b) => b.isActive - a.isActive);
+
+  const data = {
+    labels: [
+      "Easy",
+      "Medium",
+      "Hard",
+      "Easy AC",
+      "Medium AC",
+      "Hard AC",
+      "Rating (Scaled)",
+    ],
+    datasets,
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        angleLines: { color: "rgba(255, 255, 255, 0.3)" },
+        grid: { color: "rgba(255, 255, 255, 0.3)" },
+        pointLabels: { color: "#E0E0E0", font: { size: 14 } },
+        ticks: { color: "#B0C4DE", backdropColor: "rgba(0, 0, 0, 0)" },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: { color: "#F8F8FF" }, // Light color for dark mode
+      },
+    },
+    onHover: (event, elements) => {
+      if (elements.length > 0) setActiveDataset(elements[0].datasetIndex);
+    },
+    onLeave: () => setActiveDataset(null),
+  };
+
+  useEffect(() =>{
+    setActiveDataset(focusedUser)
+  }, [focusedUser])
 
   return (
-    <ResponsiveContainer
-      width="100%"
-      height={300}
-      // style={{
-      //   backgroundImage: `url(${mid_background})`,
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      // }}
+    <div
+      style={{
+        width: "450px",
+        height: "450px",
+        backgroundColor: "#4B0082",
+        padding: "20px",
+        borderRadius: "10px",
+      }}
     >
-      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-        <PolarGrid />
-        <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis angle={30} domain={[0, 100]} />
-        <Radar
-          name="Option A"
-          dataKey="A"
-          stroke="#FF0000"
-          fill="#FF0000"
-          fillOpacity={0.6}
-        />
-        <Radar
-          name="Option B"
-          dataKey="B"
-          stroke="#0000FF"
-          fill="#0000FF"
-          fillOpacity={0.6}
-        />
-        <Radar
-          name="Option C"
-          dataKey="C"
-          stroke="#00FF00"
-          fill="#00FF00"
-          fillOpacity={0.6}
-        />
-      </RadarChart>
-    </ResponsiveContainer>
+      <Radar data={data} options={options} />
+    </div>
   );
 };
 
-export default RadarChartComponent;
+export default RadarChart;

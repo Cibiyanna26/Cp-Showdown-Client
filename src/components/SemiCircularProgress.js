@@ -6,10 +6,12 @@ import {
 
 import '../styles.css';
 
-const SemiCircularProgressBar = () =>{
+const SemiCircularProgressBar = ({
+  stats
+}) =>{
   return (
     <>
-      <CircularProgressbarWithChildren value={66}>
+      <CircularProgressbarWithChildren value={Math.round(Number(stats?.score))}>
         {/* Put any JSX content in here that you'd like. It'll be vertically and horizonally centered. */}
         <img
           style={{ width: 80, marginTop: -5 }}
@@ -17,7 +19,7 @@ const SemiCircularProgressBar = () =>{
           alt="doge"
         />
         <div style={{ fontSize: 20, marginTop: -5 }}>
-          <strong>66%</strong> mate
+          <strong>{Math.round(Number(stats?.score))}%</strong> xyz
         </div>
       </CircularProgressbarWithChildren>
     </>
