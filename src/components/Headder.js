@@ -1,64 +1,73 @@
 import background_image from "../assets/landing-background-cross.png";
 import Logo from "../assets/Devoice-White-Logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import drop_down from "../assets/icon _chevron bottom_.svg";
-import leetcode_icon from "../assets/leetcode.svg";
 import useUserDetails from "../hooks/useUserDetails"; 
 import { useState } from "react";
 
-const Headder = ()=> {
-    const { userDetails, isVerified, updateUserDetails, updateLoginStatus } = useUserDetails();
-    const [shlogout,setLogout] = useState(true)
-    const logout = () => {
-      updateUserDetails(null)
-      updateLoginStatus(false)
-      console.log(sessionStorage.getItem('access_token'))
-      sessionStorage.removeItem('access_token')
-      console.log(sessionStorage.getItem('access_token'))
-      setLogout(true)
-      window.location.href = '/'
-    }
-    return (
-        <nav id="navbar" className="bg-transparent fixed top-0 w-full">
-          <div className="flex items-center justify-between py-[8px] md:px-[20px] px-[10px]">
-            <div id="left-logo " className="flex flex-row items-center">
-              <img className="w-[60px] h-[60px]" src={Logo}></img>
-              <Link to={"/"} className="md:text-xl text- font-bold">
-                CP SHOWDOWN
+const Headder = () => {
+  const { userDetails, isVerified, updateUserDetails, updateLoginStatus } = useUserDetails();
+  const [shlogout, setLogout] = useState(true);
+
+  const logout = () => {
+    updateUserDetails(null);
+    updateLoginStatus(false);
+    sessionStorage.removeItem('access_token');
+    setLogout(true);
+    window.location.href = '/';
+  };
+
+  return (
+    <nav id="navbar" className="bg-transparent fixed top-0 w-full z-50">
+      <div className="flex items-center justify-between py-2 px-4 md:px-8">
+        {/* Left Logo Section */}
+        <div id="left-logo" className="flex items-center space-x-2">
+          <img className="w-12 h-12" src={Logo} alt="Logo" />
+          <Link to="/" className="text-lg md:text-xl font-bold text-white">
+            CP SHOWDOWN
+          </Link>
+        </div>
+
+        {/* Right Section */}
+        <div>
+          <div className="flex items-center space-x-4 p-2 rounded-xl text-white opacity-70 border-2 border-white">
+            {userDetails ? (
+              <>
+                <p className="hidden md:block text-sm md:text-base">{userDetails.name}</p>
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={userDetails?.picture}
+                  alt="User"
+                />
+                <img
+                  className="w-5 h-5 cursor-pointer"
+                  src={drop_down}
+                  alt="Dropdown"
+                  onClick={() => setLogout(!shlogout)}
+                />
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="px-4 py-2 bg-blue-500 rounded-md text-white text-sm md:text-base"
+              >
+                Log In
               </Link>
-            </div>
-            <div>
-              <div className="flex flex-row items-center space-x-4 p-[8px] rounded-xl text-white opacity-70 border-2">
-                {userDetails ? (
-                  <>
-                    <p>{userDetails.name}</p>
-                    <img
-                      className="w-[30px] h-[30px] rounded-full"
-                      src={userDetails?.picture}
-                    ></img>
-                    <img 
-                      className="w-[20px] h-[20px]"
-                      src={drop_down}
-                      onClick={()=>setLogout(!shlogout)}
-                    ></img>
-                  </>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="px-4 py-2 bg-blue-500 rounded-md text-white"
-                  >
-                    Log In
-                  </Link>
-                )}
-              </div>
-              
-              <div hidden={shlogout} onClick={()=>logout()} className="w-full text-center pt-[15px] opacity-70">
-                <h1>Logout</h1>
-              </div>
-            </div>
+            )}
           </div>
-        </nav>
-    )
-}
+
+          {/* Logout Dropdown */}
+          <div
+            hidden={shlogout}
+            onClick={() => logout()}
+            className="w-full text-center pt-2 opacity-70 cursor-pointer"
+          >
+            <h1 className="text-sm md:text-base text-white">Logout</h1>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 export default Headder;

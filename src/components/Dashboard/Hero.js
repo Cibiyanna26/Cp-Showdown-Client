@@ -4,52 +4,62 @@ import leetcode_icon from "../../assets/leetcode.svg";
 import close_icon from '../../assets/icons8-close-96.svg'
 import { fetchCompareUser } from "../../utils/platform.service";
 import toast, { Toaster } from 'react-hot-toast';
-
-
+import Loader from "../Loader";
+import look_down_arrow from "../../assets/look-down.svg";
+import { STATEVARIABLES } from "../../contexts/variables";
 const Hero = ({
   usernames,
-  addUser, removeUser, handleUserChange, handleNewResults
+  addUser,
+  removeUser,
+  handleUserChange,
+  handleNewResults,
+  compareLoader,
+  handleCompareLoader,
+  handleDashBoardState
 }) => {
-
-
   // Function to compare usernames (placeholder for now)
+
+  // const [scrollDownArrow, setSro]
   const compareUsers = async () => {
-    console.log(
-      "Comparing users:",
-      usernames.filter((name) => name?.trim() !== "")
-    );
+    handleCompareLoader(true);
 
     const newUsernames = [];
-    usernames.forEach((values, index) =>{
+    usernames.forEach((values, index) => {
       newUsernames.push(values?.trim());
-    })
+    });
 
-    try{
+    try {
       const userScores = await fetchCompareUser(newUsernames);
-      if(!userScores?.valid){
-        console.log('failed to fetch user scores')
-        toast.error(userScores.error)
+      if (!userScores?.valid) {
+        handleCompareLoader(false);
+        handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
+        console.log("failed to fetch user scores");
+        toast.error(userScores?.error);
         return;
       }
-      handleNewResults(userScores?.data)
-    }catch(err){
-      console.log('Error:', err)
-    }
+      handleDashBoardState("whatsup", STATEVARIABLES?.SUCCESS);
+      handleNewResults(userScores?.data);
+      handleCompareLoader(false);
 
+    } catch (err) {
+      handleDashBoardState('whatsup', STATEVARIABLES?.FAILED);
+      handleCompareLoader(false);
+      console.log("Error:", err);
+    }
   };
 
   return (
     <>
       <div
-        className="flex justify-center min-h-screen pt-[100px]"
+        className="flex justify-center min-h-screen pt-[100px] relative"
         style={{
           backgroundImage: `url(${background_image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <Toaster/>
-        <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px]">
+        <Toaster />
+        <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
           {/* Platform Selection Buttons */}
           <div className="flex flex-row justify-around">
             <button className="px-[12px] py-[8px] rounded-xl border-2">
@@ -101,12 +111,16 @@ const Hero = ({
             >
               Add User
             </button>
-            <button
-              onClick={compareUsers}
-              className="bg-primary p-[16px] rounded-xl"
-            >
-              Compare
-            </button>
+            {compareLoader == false ? (
+              <button
+                onClick={compareUsers}
+                className="bg-primary p-[16px] rounded-xl"
+              >
+                Compare
+              </button>
+            ) : (
+              <Loader />
+            )}
           </div>
         </div>
       </div>
