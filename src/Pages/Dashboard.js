@@ -7,9 +7,10 @@ import leetcode_icon from '../assets/leetcode.svg'
 import Comparision from "../components/Dashboard/Comparision";
 import { useEffect, useState } from "react";
 import useUserDetails from "../hooks/useUserDetails";
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Analytics from "../components/Dashboard/Analytics";
 import { isLoggedIn } from "../utils/auth.service";
+import Headder from "../components/Headder";
 
 const Dashboard = () => {
   const { userDetails, isVerified, updateLoginStatus, updateUserDetails } = useUserDetails();
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [results, setResult] = useState([]);
 
   const [searchParams] = useSearchParams();
+  const nav = useNavigate()
   useEffect(()=>{
     const access_token = searchParams.get("accessToken");
     if (access_token) {
@@ -31,6 +33,7 @@ const Dashboard = () => {
           email: searchParams.get("email")
         }
       )
+      nav('/dashboard')
     }
     else if (sessionStorage.getItem("access_token")==null){
       window.location.href = '/'
@@ -71,38 +74,7 @@ const Dashboard = () => {
   return (
     <>
       <section className="landing page text-white cursor-custom">
-        <nav
-          id="navbar"
-          className="bg-transparent fixed top-0 w-full"
-
-        >
-          <div className="flex items-center justify-between py-[8px] px-[20px]">
-            <div id="left-logo" className="flex flex-row items-center">
-              <img className="w-[60px] h-[60px]" src={Logo}></img>
-              <Link to={"/"} className="text-xl font-bold">
-                CP SHOWDOWN
-              </Link>
-            </div>
-            <div className="flex flex-row items-center space-x-4 p-[8px] rounded-xl text-white opacity-70 border-2">
-              {userDetails ? (
-                <>
-                  <p>{userDetails?.name}</p>
-                  <img
-                    className="w-[30px] h-[30px] rounded-full"
-                    src={leetcode_icon}
-                  ></img>
-                </>
-              ) : (
-                <Link
-                  to="/login"
-                  className="px-4 py-2 bg-blue-500 rounded-md text-white"
-                >
-                  Log In
-                </Link>
-              )}
-            </div>
-          </div>
-        </nav>
+        <Headder/>
         <Hero
           usernames={usernames}
           addUser={addUser}
