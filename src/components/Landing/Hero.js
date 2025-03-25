@@ -1,8 +1,18 @@
 import background_image from '../../assets/landing-background-cross.png'
 import { useNavigate } from 'react-router-dom';
+import useUserDetails from '../../hooks/useUserDetails';
 
 const Hero = () =>{
   const navigate = useNavigate();
+  const {isVerified} = useUserDetails();
+  const handleClick = async() => {
+    if (!isVerified) {
+      navigate('/login')
+    }
+    else{
+      navigate("/dashboard")
+    }
+  }
     return (
       <>
         <div
@@ -18,7 +28,7 @@ const Hero = () =>{
               COMPARE YOUR COMPETITIVE PROGRAMMING SKILLS
             </h1>
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={() => handleClick()}
               className="p-[16px] rounded-xl bg-primary"
               data-cursor="pointer"
             >

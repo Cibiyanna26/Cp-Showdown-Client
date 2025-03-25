@@ -3,6 +3,7 @@ import background_image from "../../assets/landing-background-cross.png";
 import leetcode_icon from "../../assets/leetcode.svg";
 import close_icon from '../../assets/icons8-close-96.svg'
 import { fetchCompareUser } from "../../utils/platform.service";
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Hero = ({
@@ -27,6 +28,7 @@ const Hero = ({
       const userScores = await fetchCompareUser(newUsernames);
       if(!userScores?.valid){
         console.log('failed to fetch user scores')
+        toast.error(userScores.error)
         return;
       }
       handleNewResults(userScores?.data)
@@ -46,6 +48,7 @@ const Hero = ({
           backgroundPosition: "center",
         }}
       >
+        <Toaster/>
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px]">
           {/* Platform Selection Buttons */}
           <div className="flex flex-row justify-around">

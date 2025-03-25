@@ -54,7 +54,21 @@ const Analytics = ({
               <div className="w-1/2">
                 <RadarChartComponent usersData={results} focusedUser={focusedUser}/>
               </div>
-              <div className="w-1/2">{}</div>
+              <div className="w-1/2 pl-10">
+                <ul class="list-disc">
+                {
+                  results[focusedUser]?.metrices?.map((element,index)=>{
+                    console.log(element)
+                    return (
+                      <li>
+                        <h1 className="text-lg text-blue-300">{element.title}</h1>
+                        <p className="pl-2" key={index} dangerouslySetInnerHTML={{ __html: element.message }} />
+                      </li>
+                    )
+                  })
+                }
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -15,11 +15,13 @@ const fetchCompareUser = async (usernames) => {
       }
     );
 
-    if (!res.ok) {
-      throw new Error(`Error: ${res.status} ${res.statusText}`);
-    }
-
     const data = await res.json();
+
+    if (res.status!=200) {
+      console.log(`Error: ${res.status} ${data.error}...............`)
+      throw new Error(`Error: ${data.error}`);
+    }
+    console.log(res.status,data)
     return { valid: true, data: data.data }; // Return the response data with a valid attribute
   } catch (error) {
     console.error("Failed to fetch comparison data:", error.message);

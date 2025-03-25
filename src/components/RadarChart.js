@@ -64,13 +64,13 @@ const RadarChart = ({ usersData, focusedUser }) => {
     return {
       label: `User ${value?.userId}`,
       data: [
-        value?.easy,
-        value?.medium,
-        value?.hard,
+        value?.easy100,
+        value?.medium100,
+        value?.hard100,
         value?.easyAC,
         value?.mediumAC,
         value?.hardAC,
-        value?.rating / 10,
+        value?.rating100,
       ],
       backgroundColor: activeDataset === index ? color.activeBackground : color.background, 
       borderColor: color.border,

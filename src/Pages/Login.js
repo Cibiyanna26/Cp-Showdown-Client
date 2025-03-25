@@ -4,6 +4,7 @@ import background_image from '../assets/landing-background-cross.png'
 import Logo from '../assets/Devoice-White-Logo.png';
 import google_icon from '../assets/icons8-google 1.svg'
 import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import toast, { Toaster } from 'react-hot-toast';
 
 async function getGoogleUri(){
   var data = await fetch(`${BACKEND_LOCAL_HOST}/auth`,{
@@ -34,6 +35,7 @@ const Login = () => {
         }
         catch(err){ 
           setLoginButtonText(signInText)
+          toast(err)
         }
         // Add login logic here
         // navigate("/onboarding") // Navigate to dashboard after login
@@ -48,6 +50,7 @@ const Login = () => {
           backgroundPosition: "center",
         }}
       >
+        <Toaster/>
         <div
           className="flex flex-col max-w-md p-8 space-y-6 bg-primary rounded-lg shadow-md opacity-70
                  items-center justify-center
@@ -65,7 +68,7 @@ const Login = () => {
                 }}
 
                 className="flex items-center space-x-6 bg-secondary 
-                            border-2 border-tertiary p-[8px] rounded-xl">
+                            border-2 border-tertiary p-[8px] rounded-xl w-full">
             <img src={google_icon}></img>
             <span className="text-xl font-semibold">{loginButtonText}</span>
           </button>
