@@ -62,7 +62,7 @@ const RadarChart = ({ usersData, focusedUser }) => {
     const color = COLORS[index];
 
     return {
-      label: `User ${value?.userId}`,
+      label: `${value?.userId}`,
       data: [
         value?.easy100,
         value?.medium100,
@@ -101,6 +101,8 @@ const RadarChart = ({ usersData, focusedUser }) => {
     maintainAspectRatio: false,
     scales: {
       r: {
+        min: 0, // Set the minimum value for the axis
+        max: 100, // Set the maximum value (adjust based on your data)
         angleLines: { color: "rgba(255, 255, 255, 0.3)" },
         grid: { color: "rgba(255, 255, 255, 0.3)" },
         pointLabels: { color: "#E0E0E0", font: { size: 14 } },
