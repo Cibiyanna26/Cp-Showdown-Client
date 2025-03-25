@@ -18,7 +18,7 @@ export const CursorProvider = ({ children }) => {
 
     document.addEventListener("mouseover", handleMouseOver);
     return () => document.removeEventListener("mouseover", handleMouseOver);
-  });
+  }, []);
 
 return (
   <CursorContext.Provider value={{ cursorType, setCursorType }}>

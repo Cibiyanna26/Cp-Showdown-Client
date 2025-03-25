@@ -8,6 +8,7 @@ import Dashboard from "./Pages/Dashboard";
 import { BACKEND_LOCAL_HOST } from "./contexts/variables";
 import UserDetailsProvider from "./providers/UserDetailsProvider";
 
+
 const App = () => {
 
   return (

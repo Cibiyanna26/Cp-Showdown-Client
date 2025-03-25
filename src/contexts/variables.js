@@ -1,6 +1,17 @@
 const BACKEND_LOCAL_HOST = 'http://localhost:5000/v1';
 
 
-export {
-    BACKEND_LOCAL_HOST,
+const STATEVARIABLES = {
+ ENTERED :'ENTERED',
+ ANALYSING : "ANALYSING",
+ SUCCESS:'SUCCESS',
+ FAILED:'FAILED',
+ LOADING:'LOADING',
+ NEUTRAL:"NEUTRAL",
 }
+
+const ERRORS = {
+    MIN_USER: 'Mininum 1 username is needed!'
+}
+
+export { BACKEND_LOCAL_HOST, STATEVARIABLES, ERRORS };

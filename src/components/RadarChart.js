@@ -72,7 +72,7 @@ const RadarChart = ({ usersData, focusedUser }) => {
         value?.hardAC,
         value?.rating100,
       ],
-      backgroundColor: activeDataset === index ? color.activeBackground : color.background, 
+      backgroundColor: activeDataset === index ? color?.activeBackground : color?.background, 
       borderColor: color.border,
       borderWidth: activeDataset === index ? 3 : 2, // Highlight active user
       pointBackgroundColor: color.point,
@@ -120,20 +120,17 @@ const RadarChart = ({ usersData, focusedUser }) => {
     onLeave: () => setActiveDataset(null),
   };
 
+  // // Remove background color for radar chart datasets
+  // datasets.forEach(dataset => {
+  //   dataset.backgroundColor = "rgba(0, 0, 0, 0)";
+  // });
+
   useEffect(() =>{
     setActiveDataset(focusedUser)
   }, [focusedUser])
 
   return (
-    <div
-      style={{
-        width: "450px",
-        height: "450px",
-        backgroundColor: "#4B0082",
-        padding: "20px",
-        borderRadius: "10px",
-      }}
-    >
+    <div className="w-full max-w-[600px] max-h-[400px] aspect-square p-5 rounded-lg mx-auto">
       <Radar data={data} options={options} />
     </div>
   );

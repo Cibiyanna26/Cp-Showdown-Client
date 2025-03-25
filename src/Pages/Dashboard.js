@@ -1,22 +1,20 @@
 
-import Logo from "../assets/Devoice-White-Logo.png";
 import Hero from "../components/Dashboard/Hero";
 import Footer from "../components/Footer";
-import drop_down from '../assets/icon _chevron bottom_.svg'
-import leetcode_icon from '../assets/leetcode.svg'
 import Comparision from "../components/Dashboard/Comparision";
 import { useEffect, useState } from "react";
 import useUserDetails from "../hooks/useUserDetails";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Analytics from "../components/Dashboard/Analytics";
-import { isLoggedIn } from "../utils/auth.service";
 import Headder from "../components/Headder";
+import { STATEVARIABLES, ERRORS } from "../contexts/variables";
+import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   const { userDetails, isVerified, updateLoginStatus, updateUserDetails } = useUserDetails();
-
+  const [compareLoader, setCompareLoader] = useState(false);
   const [usernames, setUsernames] = useState([""]);
-
+  const [whatsHappening, setWhatsHappening] = useState(STATEVARIABLES?.ENTERED);
   const [results, setResult] = useState([]);
 
   const [searchParams] = useSearchParams();
@@ -51,6 +49,10 @@ const Dashboard = () => {
   };
 
    const removeUser = (index) => {
+    if(usernames.length <=1) {
+      toast.error(ERRORS?.MIN_USER);
+      return;
+    }
      const newUsername = [];
      usernames.forEach((value, idx) => {
        if (idx != index) newUsername.push(usernames[idx]);
@@ -70,21 +72,64 @@ const Dashboard = () => {
     setResult(value);
   }
 
+  const handleCompareLoader = (state)=>{
+    setCompareLoader(state);
+  }
+
+  const handleDashBoardState = (key, state) =>{
+    if (key === "whatsup") {
+      setWhatsHappening(state);
+    }
+  }
+
+
+  useEffect(() => {
+    if (whatsHappening === STATEVARIABLES?.SUCCESS) {
+      const comparisonDiv = document.getElementById("comparision");
+      if (comparisonDiv) {
+        comparisonDiv.scrollIntoView({ behavior: "smooth" });
+      }
+      setWhatsHappening(STATEVARIABLES?.NEUTRAL);
+    }
+    console.log('incoming')
+  }, [whatsHappening]);
+
 
   return (
     <>
       <section className="landing page text-white cursor-custom">
-        <Headder/>
+        
+        <Toaster/>
+        <Headder />
         <Hero
           usernames={usernames}
           addUser={addUser}
           removeUser={removeUser}
           handleUserChange={handleUserChange}
           handleNewResults={handleNewResults}
+          compareLoader={compareLoader}
+          handleCompareLoader={handleCompareLoader}
+          handleDashBoardState={handleDashBoardState}
         />
-        <Comparision usernames={usernames} results={results} />
-        <Analytics usernames={usernames} results={results} />
-        <Footer />
+  
+        {whatsHappening == STATEVARIABLES?.ENTERED || whatsHappening == STATEVARIABLES?.FAILED ? (
+          <></>
+        ) : (
+          <>
+            <Comparision
+              usernames={usernames}
+              results={results}
+              compareLoader={compareLoader}
+              handleDashBoardState={handleDashBoardState}
+            />
+            <Analytics
+              usernames={usernames}
+              results={results}
+              compareLoader={compareLoader}
+            />
+            <Footer />
+          </>
+        )}
       </section>
     </>
   );
