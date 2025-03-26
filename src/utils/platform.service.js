@@ -1,10 +1,11 @@
 import { BACKEND_LOCAL_HOST } from "../contexts/variables";
 
-const fetchCompareUser = async (usernames) => {
+const fetchCompareUser = async (usernames,type) => {
   try {
     const accessToken = sessionStorage.getItem("access_token"); // Retrieve access token from local storage
+    console.log(`${BACKEND_LOCAL_HOST}/protected-route/compare${type}`)
     const res = await fetch(
-      `${BACKEND_LOCAL_HOST}/protected-route/compare`,
+      `${BACKEND_LOCAL_HOST}/protected-route/compare${type}`,
       {
         method: "POST",
         headers: {
@@ -18,8 +19,11 @@ const fetchCompareUser = async (usernames) => {
     const data = await res.json();
 
     if (res.status!=200) {
-      console.log(`Error: ${res.status} ${data.error}...............`)
-      throw new Error(`Error: ${data.error}`);
+      return {
+        valid:false,
+        status:res.status,
+        message:data.message
+      }
     }
     console.log(res.status,data)
     return { valid: true, data: data.data }; // Return the response data with a valid attribute
