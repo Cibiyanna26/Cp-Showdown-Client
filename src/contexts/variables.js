@@ -1,5 +1,5 @@
 const BACKEND_LOCAL_HOST = 'http://localhost:5000/v1';
-const BACKEND_URL = "https://cp-showdown-server.vercel.app/";
+const BACKEND_URL = "https://cp-showdown-server.vercel.app/v1";
 
 const STATEVARIABLES = {
  ENTERED :'ENTERED',
@@ -14,4 +14,4 @@ const ERRORS = {
     MIN_USER: 'Mininum 1 username is needed!'
 }
 
-export { BACKEND_LOCAL_HOST, STATEVARIABLES, ERRORS };
+export { BACKEND_LOCAL_HOST, STATEVARIABLES, ERRORS, BACKEND_URL };

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import { BACKEND_LOCAL_HOST, BACKEND_URL } from "../contexts/variables";
 
 
 const Compare = () => {
@@ -24,7 +24,7 @@ const Compare = () => {
         try{
             setLeetcodeID(prev => prev.filter(item => item.userId != ''));
             console.log(leetcodeID)
-            const response = await fetch(`${BACKEND_LOCAL_HOST}/auth/v1/compare`,{
+            const response = await fetch(`${BACKEND_URL || BACKEND_LOCAL_HOST}/auth/v1/compare`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

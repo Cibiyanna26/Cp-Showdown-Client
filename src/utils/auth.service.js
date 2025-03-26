@@ -1,4 +1,4 @@
-import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import { BACKEND_LOCAL_HOST, BACKEND_URL } from "../contexts/variables";
 const isLoggedIn = async () => {
   const accessToken = sessionStorage.getItem("access_token");
   if (!accessToken) {
@@ -6,7 +6,7 @@ const isLoggedIn = async () => {
   }
   try {
     const response = await fetch(
-      `${BACKEND_LOCAL_HOST}/protected-route/profile`,
+      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/profile`,
       {
         method: "get",
         headers: {

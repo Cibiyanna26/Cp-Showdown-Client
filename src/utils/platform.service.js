@@ -1,10 +1,10 @@
-import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import { BACKEND_LOCAL_HOST, BACKEND_URL } from "../contexts/variables";
 
 const fetchCompareUser = async (usernames) => {
   try {
     const accessToken = sessionStorage.getItem("access_token"); // Retrieve access token from local storage
     const res = await fetch(
-      `${BACKEND_LOCAL_HOST}/protected-route/compare`,
+      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/compare`,
       {
         method: "POST",
         headers: {
