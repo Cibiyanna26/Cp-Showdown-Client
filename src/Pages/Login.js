@@ -3,11 +3,11 @@ import { redirect, useNavigate, Navigate } from "react-router-dom"
 import background_image from '../assets/landing-background-cross.png'
 import Logo from '../assets/Devoice-White-Logo.png';
 import google_icon from '../assets/icons8-google 1.svg'
-import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import { BACKEND_LOCAL_HOST, BACKEND_URL } from "../contexts/variables";
 import toast, { Toaster } from 'react-hot-toast';
 
 async function getGoogleUri(){
-  var data = await fetch(`${BACKEND_LOCAL_HOST}/auth`,{
+  var data = await fetch(`${ BACKEND_URL || BACKEND_LOCAL_HOST}/auth`,{
     method:"post"
   })
   data = await data.json();
@@ -35,7 +35,7 @@ const Login = () => {
         }
         catch(err){ 
           setLoginButtonText(signInText)
-          toast(err)
+          console.log('err', err);
         }
         // Add login logic here
         // navigate("/onboarding") // Navigate to dashboard after login

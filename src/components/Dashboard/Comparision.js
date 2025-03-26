@@ -41,9 +41,11 @@ const Comparision = ({ results }) => {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-          id="comparision"
         >
-          <div className="pt-[30px] lg:w-[900px] w-full mx-auto space-y-4">
+          <div
+            className="pt-[30px] lg:w-[900px] w-full mx-auto space-y-4"
+            id="comparision"
+          >
             {/* title result */}
             <h1 className="text-[48px] font-extrabold text-gold text-center">
               Results
@@ -51,17 +53,17 @@ const Comparision = ({ results }) => {
             {/* results of the compared user */}
             <div className="flex flex-row items-center md:space-x-8 space-y-4 justify-center">
               {/* cards of result */}
-                {results &&
-                  results
-                    .slice(currentIndex, currentIndex + cardLimit)
-                    .map((value, index) => (
-                      <>
-                        <ScoreCard key={index} stats={value} />
-                        {cardLimit > 1 && results.length > 1 && index === 0 && (
-                          <img src={vs} className="w-[100px] h-[100px]"></img>
-                        )}
-                      </>
-                    ))}
+              {results &&
+                results
+                  .slice(currentIndex, currentIndex + cardLimit)
+                  .map((value, index) => (
+                    <>
+                      <ScoreCard key={index} stats={value} />
+                      {cardLimit > 1 && results.length > 1 && index === 0 && (
+                        <img src={vs} className="w-[100px] h-[100px]"></img>
+                      )}
+                    </>
+                  ))}
             </div>
             {/* navigation to see all user scores */}
             <div className="flex justify-between">
