@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import drop_down from "../assets/icon _chevron bottom_.svg";
 import useUserDetails from "../hooks/useUserDetails"; 
 import { useState } from "react";
+import logout_icon from '../assets/logout-icon.png'
 
 const Headder = () => {
   const { userDetails, isVerified, updateUserDetails, updateLoginStatus } = useUserDetails();
@@ -18,7 +19,10 @@ const Headder = () => {
   };
 
   return (
-    <nav id="navbar" className="bg-transparent fixed top-0 w-full z-50">
+    <nav
+      id="navbar"
+      className="fixed top-0 w-full z-50 border-b border-tertiary bg-secondary"
+    >
       <div className="flex items-center justify-between py-2 px-4 md:px-8">
         {/* Left Logo Section */}
         <div id="left-logo" className="flex items-center space-x-2">
@@ -29,11 +33,13 @@ const Headder = () => {
         </div>
 
         {/* Right Section */}
-        <div>
-          <div className="flex items-center space-x-4 p-2 rounded-xl text-white opacity-70 border-2 border-white">
+        <div className="relative">
+          <div className="flex items-center space-x-4 p-2 rounded-xl text-white ">
             {userDetails ? (
               <>
-                <p className="hidden md:block text-sm md:text-base">{userDetails.name}</p>
+                <p className="hidden md:block text-sm md:text-base">
+                  {userDetails.name}
+                </p>
                 <img
                   className="w-8 h-8 rounded-full"
                   src={userDetails?.picture}
@@ -57,12 +63,14 @@ const Headder = () => {
           </div>
 
           {/* Logout Dropdown */}
-          <div
-            hidden={shlogout}
-            onClick={() => logout()}
-            className="w-full text-center pt-2 opacity-70 cursor-pointer"
-          >
-            <h1 className="text-sm md:text-base text-white">Logout</h1>
+          <div className="" hidden={shlogout}>
+            <button
+              onClick={() => logout()}
+              className="w-full  flex flex-row space-x-2 justify-center pt-2 cursor-pointer absolute p-2 rounded-xl bg-secondary  text-white md:bottom-[-60px] bottom-[-50px] border border-tertiary"
+            >
+              <h1 className="text-sm md:text-base text-white">Logout</h1>
+              <img src={logout_icon} className="w-[20px] h-[20px]"></img>
+            </button>
           </div>
         </div>
       </div>

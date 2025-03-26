@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import UserDetailsContext from "../contexts/userDetailscontext";
 import { isLoggedIn } from "../utils/auth.service";
 
@@ -7,30 +7,26 @@ const UserDetailsProvider = ({ children }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Function to update user details
-  const updateUserDetails = (details) => {
+  const updateUserDetails = useCallback((details) => {
     setUserDetails(details);
-  };
+  }, []);
 
-  // Function to update login status
-  const updateLoginStatus = (status) => {
+  const updateLoginStatus = useCallback((status) => {
     setIsVerified(status);
-  };
+  }, []);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const loggedIn = await isLoggedIn();
-        console.log("API Response:", loggedIn); // Debugging step
-        if (!loggedIn || !loggedIn.valid) {
-          console.log("User is not logged in");
+        if (!loggedIn?.valid) {
           setUserDetails(null);
           setIsVerified(false);
         } else {
           setUserDetails({
-            name: loggedIn?.user?.username || "",
-            picture: loggedIn?.user?.picture || "",
-            email: loggedIn?.user?.email || "",
+            name: loggedIn.user?.username || "",
+            picture: loggedIn.user?.picture || "",
+            email: loggedIn.user?.email || "",
           });
           setIsVerified(true);
         }
@@ -39,25 +35,18 @@ const UserDetailsProvider = ({ children }) => {
         setUserDetails(null);
         setIsVerified(false);
       } finally {
-        setLoading(false); // Ensure loading is set to false in all cases
+        setLoading(false);
       }
     };
 
     fetchUserDetails();
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
   return (
     <UserDetailsContext.Provider
-      value={{
-        userDetails,
-        isVerified,
-        updateUserDetails,
-        updateLoginStatus,
-      }}
+      value={{ userDetails, isVerified, updateUserDetails, updateLoginStatus }}
     >
       {children}
     </UserDetailsContext.Provider>
