@@ -22,7 +22,7 @@ const fetchCompareUser = async (usernames,type) => {
       return {
         valid:false,
         status:res.status,
-        message:data.message
+        error:data.error
       }
     }
     console.log(res.status,data)

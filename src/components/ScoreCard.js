@@ -10,6 +10,7 @@ const ScoreCard = ({
           <div className=" bg-secondary  p-[16px] rounded-xl text-center flex justify-center space-y-6 flex-col min-h-[250px]">
             <SemiCircularProgressBar stats={stats}/>
             <h1 className="text-xl font-semibold"> {stats?.userId}</h1>
+            <h1 className="text-l font-semibold"> {stats?.funnyUserName}</h1>
           </div>
         </div>
       </>
