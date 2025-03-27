@@ -20,6 +20,7 @@ const Hero = ({
   // Function to compare usernames (placeholder for now)
 
   // const [scrollDownArrow, setSro]
+  const [type,setType] = useState('Friendly')
   const compareUsers = async () => {
     handleCompareLoader(true);
 
@@ -29,8 +30,9 @@ const Hero = ({
     });
 
     try {
-      const userScores = await fetchCompareUser(newUsernames);
+      const userScores = await fetchCompareUser(newUsernames, type);
       if (!userScores?.valid) {
+        if(userScores?.status==401) window.location.href = '/login'
         handleCompareLoader(false);
         handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
         console.log("failed to fetch user scores");
@@ -62,11 +64,17 @@ const Hero = ({
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
           {/* Platform Selection Buttons */}
           <div className="flex flex-row justify-around">
-            <button className="px-[12px] py-[8px] rounded-xl border-2">
-              Leetcode
+            <button 
+              className={`px-[12px] py-[8px] rounded-xl ${(type=="Friendly")?"border-2":" bg-primary"}`}
+              onClick={() => type !== 'Friendly' && setType('Friendly')}
+            >
+              Friendly
             </button>
-            <button className="px-[12px] py-[8px] rounded-xl bg-primary">
-              Codeforces
+            <button 
+              className={`px-[12px] py-[8px] rounded-xl ${(type=="Global")?"border-2":" bg-primary"}`}
+              onClick={() => type !== 'Global' && setType('Global')}
+            >
+              Global
             </button>
           </div>
 

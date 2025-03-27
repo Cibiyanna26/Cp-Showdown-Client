@@ -1,22 +1,69 @@
 import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
 import background_image from "../assets/landing-background-cross.png";
 import Logo from "../assets/Devoice-White-Logo.png";
 import google_icon from "../assets/icons8-google 1.svg";
 import leetcode_icon from '../assets/leetcode.svg'
 import codeforces_icon from "../assets/codeforces.svg";
+import { BACKEND_LOCAL_HOST } from "../contexts/variables";
+import toast, { Toaster } from 'react-hot-toast';
+import { useEffect } from "react";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
+import useUserDetails from "../hooks/useUserDetails";
 
 const Onboarding = () => {
     const navigate = useNavigate()
     const [LeetcodeUsername, setLeetcodeUsername] = useState(null);
     const [CodeforcesUsername, setCodeforcesUsername] = useState(null);
-    const clickContinue = () =>{
+    const [searchParams] = useSearchParams();
+    const { userDetails, isVerified, updateLoginStatus, updateUserDetails } = useUserDetails();
+    let access_token = "";
+    useEffect(()=>{
+        access_token = searchParams.get("accessToken");
+        if (access_token) {
+          sessionStorage.setItem("access_token", access_token);
+          updateLoginStatus(true)
+          updateUserDetails(
+            {
+              name: searchParams.get("name"),
+              picture: searchParams.get("picture"),
+              email: searchParams.get("email")
+            }
+          )
+        }
+        else{
+          window.location.href = '/'
+        }
+      }, []);
+    const clickContinue = async() =>{
         console.log(LeetcodeUsername, CodeforcesUsername);
-        // navigate('/dashboard')
+        try{
+          const response = await fetch(`${BACKEND_LOCAL_HOST}/protected-route/profile`,{
+            method:'PUT',
+            headers:{
+              'Content-Type':"application/json",
+              "Authorization":`Bearer ${access_token}`
+            },
+            body:JSON.stringify(
+              {
+                "leetcode_username":LeetcodeUsername,
+                "codeforces_username":CodeforcesUsername
+              }
+            )
+          })
+          const data = await response.json();
+          if(response.status!=200){
+            toast.error(data.error)
+          }
+          else navigate('/dashboard')
+        }catch(error){
+          console.log("Error ",error)
+          toast.error(error.message)
+        }
     }
 
     return (
       <>
+        <Toaster/>
         <div
           className="flex items-center justify-center min-h-screen"
           style={{
@@ -26,7 +73,7 @@ const Onboarding = () => {
           }}
         >
           <div
-            className="flex flex-col max-w-md p-8 space-y-6 bg-primary rounded-lg shadow-md opacity-70
+            className="flex w-[389px] flex-col max-w-md p-8 space-y-6 bg-primary rounded-lg shadow-md opacity-70
                  items-center justify-center
                  text-white text-center
                  "
@@ -38,7 +85,7 @@ const Onboarding = () => {
             <div className="relative">
               <input
                 className="flex items-center space-x-6 bg-secondary 
-                            border-2 border-tertiary pl-[60px] py-[16px] rounded-xl"
+                            border-2 border-tertiary pl-[60px] py-[16px] rounded-xl w-[340px]"
                 placeholder="Enter Your Leetcode Username"
                 value={LeetcodeUsername}
                 onChange={(e) => setLeetcodeUsername(e.target.value)}
@@ -51,7 +98,7 @@ const Onboarding = () => {
             <div className="relative">
               <input
                 className="flex items-center space-x-6 bg-secondary 
-                            border-2 border-tertiary pl-[60px] py-[16px] rounded-xl"
+                            border-2 border-tertiary pl-[60px] py-[16px] rounded-xl w-[340px]"
                 placeholder="Enter Your Codeforces Username"
                 value={CodeforcesUsername}
                 onChange={(e) => setCodeforcesUsername(e.target.value)}
@@ -67,6 +114,7 @@ const Onboarding = () => {
             >
               Continue
             </button>
+            <Link to="/dashboard">Skip</Link>
           </div>
         </div>
       </>

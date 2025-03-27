@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import UserDetailsContext from "../contexts/userDetailscontext";
 import { isLoggedIn } from "../utils/auth.service";
+import Filler from "../components/Filler";
+import mid_background from '../assets/mid-page-bg.png'
 
 const UserDetailsProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
@@ -42,7 +44,18 @@ const UserDetailsProvider = ({ children }) => {
     fetchUserDetails();
   }, []); // Empty dependency array ensures this runs only once
 
-  if (loading) return <div>Loading...</div>;
+  if (loading){return (
+    <div
+      style={{
+        backgroundImage: `url(${mid_background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      className="bg-secondary min-h-screen flex justify-center items-center text-white"
+    >
+      <Filler></Filler>
+    </div>
+  );};
 
   return (
     <UserDetailsContext.Provider
