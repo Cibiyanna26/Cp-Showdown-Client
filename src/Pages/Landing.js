@@ -10,7 +10,7 @@ const Landing = () => {
       <section className="landing page text-white">
         <Headder/>
         <Hero />
-        <About />
+        {/* <About /> */}
         <WhatWeOffer/>
         <Footer />
       </section>
