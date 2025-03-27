@@ -5,7 +5,7 @@ const fetchCompareUser = async (usernames,type) => {
     const accessToken = sessionStorage.getItem("access_token"); // Retrieve access token from local storage
     console.log(`${BACKEND_LOCAL_HOST}/protected-route/compare${type}`)
     const res = await fetch(
-      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/compare`,
+      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/compare${type}`,
       {
         method: "POST",
         headers: {

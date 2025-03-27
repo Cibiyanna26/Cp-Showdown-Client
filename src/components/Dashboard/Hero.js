@@ -66,13 +66,13 @@ const Hero = ({
           <div className="flex flex-row justify-around">
             <button 
               className={`px-[12px] py-[8px] rounded-xl ${(type=="Friendly")?"border-2":" bg-primary"}`}
-              onClick={()=>setType('Friendly')}
+              onClick={() => type !== 'Friendly' && setType('Friendly')}
             >
               Friendly
             </button>
             <button 
               className={`px-[12px] py-[8px] rounded-xl ${(type=="Global")?"border-2":" bg-primary"}`}
-              onClick={()=>setType('Global')}
+              onClick={() => type !== 'Global' && setType('Global')}
             >
               Global
             </button>
