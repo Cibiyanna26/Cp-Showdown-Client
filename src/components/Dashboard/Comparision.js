@@ -51,6 +51,14 @@ const Comparision = ({ results }) => {
             {/* results of the compared user */}
             <div className="flex flex-col items-center md:w-[400px] sm:w-[350px] w-[300px] mx-auto justify-center space-y-6">
               {/* cards of result */}
+
+              <div className="flex flex-row p-[16px] rounded-xl space-x-4 items-center w-full bg-yellow-700">
+                <h1 className="w-[30px] h-[30px] rounded-full bg-yellow-500 items-center text-center">#</h1>
+                <div className="flex flex-col space-y-2">
+                  <h1 className="text-black">Your Rank</h1>
+                  <h1>Based on your Comparisions</h1>
+                </div>
+              </div>
               {results &&
                 results.map((value, index) => {
                   return (
