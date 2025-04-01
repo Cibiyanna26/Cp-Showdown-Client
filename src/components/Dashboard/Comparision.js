@@ -55,8 +55,8 @@ const Comparision = ({ results }) => {
               <div className="flex flex-row p-[16px] rounded-xl space-x-4 items-center w-full bg-yellow-700">
                 <h1 className="w-[30px] h-[30px] rounded-full bg-yellow-500 items-center text-center">#</h1>
                 <div className="flex flex-col space-y-2">
-                  <h1 className="text-black">Your Rank</h1>
-                  <h1>Based on your Comparisions</h1>
+                  <h1 className="text-yellow-300">Your Rank & Score</h1>
+                  <h1 className="md:text-xl text-sm">Based on your Comparisions</h1>
                 </div>
               </div>
               {results &&
@@ -74,7 +74,7 @@ const Comparision = ({ results }) => {
                             src={value?.profile?.profile?.userAvatar}
                             className="w-[30px] h-[30px] rounded-full"
                           ></img>
-                          <h1>{value?.userId}</h1>
+                          <h1 className="md:text-lg text-sm">{value?.userId}</h1>
                         </div>
                         <div>
                           <h1 className="text-blue-500">{value?.score}</h1>

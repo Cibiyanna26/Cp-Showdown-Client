@@ -1,5 +1,5 @@
 const BACKEND_LOCAL_HOST = 'http://localhost:5000/v1';
-const BACKEND_URL = "https://cp-showdown-server.vercel.app/v1";
+const BACKEND_URL = "http://localhost:5000/v1";
 
 const STATEVARIABLES = {
  ENTERED :'ENTERED',
