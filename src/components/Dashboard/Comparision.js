@@ -9,7 +9,7 @@ import look_down_arrow from '../../assets/look-down.svg'
 import ScoreCard from "../ScoreCard";
 import { useEffect } from "react";
 import { useState } from "react";
-
+import { COLORS } from "../../contexts/variables";
 
 const Comparision = ({ results }) => {
 
@@ -35,40 +35,59 @@ const Comparision = ({ results }) => {
     return (
       <>
         <div
-          className="md:min-h-screen px-4"
+          className="px-4 relative"
           style={{
             backgroundImage: `url(${mid_background})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
+          id="comparision"
         >
-          <div
-            className="pt-[30px] lg:w-[900px] w-full mx-auto space-y-4"
-            id="comparision"
-          >
+          <div className="pt-[30px] lg:w-[900px] w-full mx-auto space-y-4">
             {/* title result */}
             <h1 className="text-[48px] font-extrabold text-gold text-center">
               Results
             </h1>
             {/* results of the compared user */}
-            <div className="flex flex-row items-center md:space-x-8 space-y-4 justify-center">
+            <div className="flex flex-col items-center md:w-[400px] sm:w-[350px] w-[300px] mx-auto justify-center space-y-6">
               {/* cards of result */}
+
+              <div className="flex flex-row p-[16px] rounded-xl space-x-4 items-center w-full bg-yellow-700">
+                <h1 className="w-[30px] h-[30px] rounded-full bg-yellow-500 items-center text-center">#</h1>
+                <div className="flex flex-col space-y-2">
+                  <h1 className="text-black">Your Rank</h1>
+                  <h1>Based on your Comparisions</h1>
+                </div>
+              </div>
               {results &&
-                results
-                  .slice(currentIndex, currentIndex + cardLimit)
-                  .map((value, index) => (
+                results.map((value, index) => {
+                  return (
                     <>
-                      <ScoreCard key={index} stats={value} />
-                      {cardLimit > 1 && results.length > 1 && index === 0 && (
-                        <img src={vs} className="w-[100px] h-[100px]"></img>
-                      )}
+                      <div className="p-[16px] flex flex-row justify-between w-full bg-secondary rounded-xl">
+                        <div className="flex flex-row space-x-4">
+                          {/* <img
+                            src={mid_background}
+                            className="w-[30px] h-[30px] rounded-full"
+                          ></img> */}
+                          <h1 className="text-green-500">#{value?.rank}</h1>
+                          <img
+                            src={value?.profile?.profile?.userAvatar}
+                            className="w-[30px] h-[30px] rounded-full"
+                          ></img>
+                          <h1>{value?.userId}</h1>
+                        </div>
+                        <div>
+                          <h1 className="text-blue-500">{value?.score}</h1>
+                        </div>
+                      </div>
                     </>
-                  ))}
+                  );
+                })}
             </div>
             {/* navigation to see all user scores */}
             <div className="flex justify-between">
               {/* Left Navigation of the Score Cards */}
-              <div
+              {/* <div
                 className={`flex flex-row space-x-4 items-center ${
                   currentIndex === 0 ? "opacity-50 pointer-events-none" : ""
                 }`}
@@ -79,19 +98,19 @@ const Comparision = ({ results }) => {
                   className="w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
                 ></img>
                 <p className="md:text-xl text-lg font-bold">Prev</p>
-              </div>
+              </div> */}
 
               {/* Current Compared Ranks */}
 
-              {cardLimit == 1 || results.length <= 1 ? (
+              {/* {cardLimit == 1 || results.length <= 1 ? (
                 <></>
               ) : (
                 <div className="text-xl font-bold">
                   Player {currentIndex + 1} vs Player {currentIndex + 2}
                 </div>
-              )}
+              )} */}
               {/* Right Navigation of the Score Cards */}
-              <div
+              {/* <div
                 className={`flex flex-row space-x-4 items-center ${
                   currentIndex + cardLimit >= results.length
                     ? "opacity-50 pointer-events-none"
@@ -108,10 +127,10 @@ const Comparision = ({ results }) => {
                   src={right_arrow}
                   className="w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
                 ></img>
-              </div>
+              </div> */}
             </div>
-            <div
-              className="flex flex-col space-y-2 items-center justify-end flex-1"
+            {/* <div
+              className="flex flex-col space-y-2 absolute bottom-8 left-[43%] items-center"
               onClick={() => {
                 const comparisonDiv =
                   document.getElementById("analytics-section");
@@ -124,7 +143,7 @@ const Comparision = ({ results }) => {
               <button>
                 <img src={look_down_arrow} className="w-[50px] h-[50px]"></img>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </>
