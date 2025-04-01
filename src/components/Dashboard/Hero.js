@@ -64,15 +64,19 @@ const Hero = ({
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
           {/* Platform Selection Buttons */}
           <div className="flex flex-row justify-around">
-            <button 
-              className={`px-[12px] py-[8px] rounded-xl ${(type=="Friendly")?"border-2":" bg-primary"}`}
-              onClick={() => type !== 'Friendly' && setType('Friendly')}
+            <button
+              className={`${
+                type == "Friendly" ? "primary-button" : " secondary-button"
+              }`}
+              onClick={() => type !== "Friendly" && setType("Friendly")}
             >
               Friendly
             </button>
-            <button 
-              className={`px-[12px] py-[8px] rounded-xl ${(type=="Global")?"border-2":" bg-primary"}`}
-              onClick={() => type !== 'Global' && setType('Global')}
+            <button
+              className={`${
+                type == "Global" ? "primary-button" : " secondary-button"
+              }`}
+              onClick={() => type !== "Global" && setType("Global")}
             >
               Global
             </button>
@@ -85,9 +89,9 @@ const Hero = ({
           {/* Dynamic User Input Fields */}
           <div className="flex flex-col space-y-4">
             {usernames.map((username, index) => (
-              <div key={index} className="relative">
+              <div key={index} className="relative" >
                 <input
-                  className="bg-secondary w-full border-2 border-tertiary pl-[60px] py-[16px] rounded-xl"
+                  className="input-design"
                   placeholder={`Enter Leetcode Username ${index + 1}`}
                   value={username}
                   onChange={(e) => handleUserChange(index, e.target.value)}
@@ -113,17 +117,14 @@ const Hero = ({
             <button
               onClick={addUser}
               disabled={usernames.length >= 5}
-              className={`border-2 border-white p-[16px] rounded-xl ${
+              className={`secondary-button ${
                 usernames.length >= 5 ? "bg-gray-500 cursor-not-allowed" : ""
               }`}
             >
               Add User
             </button>
             {compareLoader == false ? (
-              <button
-                onClick={compareUsers}
-                className="bg-primary p-[16px] rounded-xl"
-              >
+              <button onClick={compareUsers} className="primary-button">
                 Compare
               </button>
             ) : (

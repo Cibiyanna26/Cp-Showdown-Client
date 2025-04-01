@@ -35,7 +35,7 @@ const Comparision = ({ results }) => {
     return (
       <>
         <div
-          className="min-h-screen px-4"
+          className="md:min-h-screen px-4"
           style={{
             backgroundImage: `url(${mid_background})`,
             backgroundSize: "cover",
@@ -87,7 +87,7 @@ const Comparision = ({ results }) => {
                 <></>
               ) : (
                 <div className="text-xl font-bold">
-                  {currentIndex + 1} vs {currentIndex + 2}
+                  Player {currentIndex + 1} vs Player {currentIndex + 2}
                 </div>
               )}
               {/* Right Navigation of the Score Cards */}

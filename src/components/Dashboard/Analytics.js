@@ -3,13 +3,15 @@ import mid_background from "../../assets/mid-page-bg.png";
 import { useEffect, useState } from "react";
 import tick_icon from '../../assets/tick-ico.svg';
 import tick_icon_grd from '../../assets/tick-icon-gradient.png'
+import { COLORS } from "../../contexts/variables";
+
 const Analytics = ({ results }) => {
   const [focusedUser, setFocusedUser] = useState(0);
 
   return (
     <>
       <div
-        className="flex min-h-screen px-4"
+        className="flex md:min-h-screen px-4"
         style={{
           backgroundImage: `url(${mid_background})`,
           backgroundSize: "cover",
@@ -17,7 +19,7 @@ const Analytics = ({ results }) => {
         }}
         id="analytics-section"
       >
-        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto mt-[80px] ">
+        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto md:mt-[80px] mt-[40px]">
           {/* User Selection Buttons */}
           <div className="border-b border-tertiary flex flex-wrap justify-around p-[8px] mb-[40px]">
             {results &&
@@ -49,6 +51,22 @@ const Analytics = ({ results }) => {
                 usersData={results}
                 focusedUser={focusedUser}
               />
+              <div className="flex flex-row justify-center space-x-6">
+                {results &&
+                  results.map((value, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className=""
+                        style={{
+                          color: focusedUser === index ? COLORS[index].activeBackground : COLORS[index].background,
+                        }}
+                      >
+                        {value?.score || "Unknown User"}
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
 
             {/* Metrics List */}
@@ -58,7 +76,11 @@ const Analytics = ({ results }) => {
                   return (
                     <div key={index} className="mb-4">
                       <h1 className="text-base sm:text-lg text-blue-300">
-                       <img src={tick_icon_grd} className="inline w-[30px] h-[30px] md:w-[40px] md:h-[40px]"></img> {element.title}
+                        <img
+                          src={tick_icon_grd}
+                          className="inline w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+                        ></img>{" "}
+                        {element.title}
                       </h1>
                       <p
                         className="pl-2 text-sm sm:text-base"
