@@ -100,6 +100,19 @@ const RadarChart = ({ usersData, focusedUser }) => {
   return (
     <div className="w-full max-w-[600px] max-h-[400px] aspect-square p-5 rounded-lg mx-auto">
       <Radar data={data} options={options} />
+      <div className="w-full flex justify-center">
+        <span>|</span>
+        {
+          usersData.map((element,index)=>{
+            const color = activeDataset === index ? COLORS[index]?.activeBackground : COLORS[index]?.background
+            return(
+              <span className={`text-[${color}] pl-[4px]`}>
+                {element.score} | 
+              </span>
+            )
+          })
+        }
+      </div>
     </div>
   );
 };

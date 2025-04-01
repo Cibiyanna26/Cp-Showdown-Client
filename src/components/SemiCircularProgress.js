@@ -19,7 +19,8 @@ const SemiCircularProgressBar = ({
           alt="doge"
         />
         <div style={{ fontSize: 20, marginTop: -5 }}>
-          <strong>Score {Math.round(Number(stats?.score))}</strong>
+
+          <strong>{Math.round(Number(stats?.score))}%</strong>
         </div>
       </CircularProgressbarWithChildren>
     </>
