@@ -22,7 +22,7 @@ const WhatWeOffer = () => {
             <div className="flex flex-wrap justify-center gap-8">
               {/* Card 1 */}
               <div
-                className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px] bg-gradient-to-b from-[#4D065B] via-[#720986] to-[#A30DC1] rounded-xl shadow p-4 space-y-4 text-center flex flex-col justify-between"
+                className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px] md:h-[400px] sm:h-[350px] h-[300px] bg-gradient-to-b from-[#4D065B] via-[#720986] to-[#A30DC1] rounded-xl shadow p-4 space-y-4 text-center flex flex-col justify-between"
                 style={{
                   boxShadow:
                     "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 10px var(--tw-bg-primary)",
@@ -54,7 +54,7 @@ const WhatWeOffer = () => {
 
               {/* Card 2 */}
               <div
-                className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px] bg-gradient-to-b from-[#4D065B] via-[#720986] to-[#A30DC1] rounded-xl shadow p-4 space-y-4 text-center flex flex-col justify-between"
+                className="w-full sm:w-[300px] md:w-[350px] lg:w-[400px]  md:h-[400px] sm:h-[350px] h-[300px] bg-gradient-to-b from-[#4D065B] via-[#720986] to-[#A30DC1] rounded-xl shadow p-4 space-y-4 text-center flex flex-col justify-between"
                 style={{
                   boxShadow:
                     "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 10px var(--tw-bg-primary)",

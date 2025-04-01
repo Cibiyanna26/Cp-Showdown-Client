@@ -7,3 +7,69 @@
   font-weight: 400;
   font-style: normal;
 }
+
+/* From Uiverse.io by absoluteSTrange */
+.primary-button {
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+  background-color: #4D065B;
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: #A306BE 0px 10px 0px 0px;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  box-shadow: #A306BE 0px 7px 0px 0px;
+}
+
+.primary-button:active {
+  background-color: #4D065B;
+  /*50, 168, 80*/
+  box-shadow: #A306BE 0px 0px 0px 0px;
+  transform: translateY(5px);
+  transition: 200ms;
+}
+
+.secondary-button {
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 2px solid #FFFFFF;
+  color: #000000;
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: #fff 0px 10px 0px 0px;
+  color: hsl(0, 0%, 100%);
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  box-shadow: #fff 0px 7px 0px 0px;
+}
+
+.secondary-button:active {
+  /* background-color:#D17D98; */
+  /*50, 168, 80*/
+  box-shadow: #fff 0px 0px 0px 0px;
+  transform: translateY(5px);
+  transition: 200ms;
+}
+
+.input-design{
+    border-radius: 10px;
+    box-shadow: #A306BE 0px 2px 0px 0px;
+    padding: 17px 60px;
+    letter-spacing: 1.5px;
+    font-size: 14px;
+    background-color: #4D065B;
+    width: 100%;
+    outline: none;
+}
+.input-design:hover, .input-design:active {
+  box-shadow: #A306BE 0px 5px 0px 0px;
+  transition: 200ms;
+}

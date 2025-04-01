@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <div
-      className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8"
+      className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 "
       style={{
         backgroundImage: `url(${background_image})`,
         backgroundSize: "cover",
@@ -50,11 +50,14 @@ const Login = () => {
       }}
     >
       <Headder/>
-      <Toaster />
+      <Toaster/>
       <div
-        className="flex flex-col max-w-md w-full p-6 sm:p-8 space-y-6 bg-primary rounded-lg shadow-md opacity-90
+        className="flex flex-col max-w-md w-full p-6 sm:p-8 space-y-6 rounded-[16px] 
                  items-center justify-center
-                 text-white text-center"
+                 text-white text-center border-2 border-white "
+        // style={{
+        //   boxShadow: "0 8px 0px 0px #fff",
+        // }}
       >
         <img src={Logo} className="w-20 h-20 sm:w-24 sm:h-24" alt="Logo" />
         <h1 className="text-2xl sm:text-3xl font-bold stroke-secondary">
@@ -67,8 +70,7 @@ const Login = () => {
           onClick={(e) => {
             handleLogin(e);
           }}
-          className="flex items-center space-x-4 sm:space-x-6 bg-secondary 
-                            border-2 border-tertiary p-2 sm:p-3 rounded-xl w-full"
+          className="flex items-center space-x-4 sm:space-x-6 primary-button"
         >
           <img src={google_icon} className="w-6 h-6 sm:w-8 sm:h-8" alt="Google Icon" />
           <span className="text-sm sm:text-xl font-semibold">{loginButtonText}</span>
