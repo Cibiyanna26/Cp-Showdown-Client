@@ -29,7 +29,7 @@ const Hero = () =>{
         </h1>
         <button
           onClick={() => handleClick()}
-          className="p-4 rounded-xl bg-primary text-white hover:bg-primary-dark transition-all duration-300"
+          className="primary-button"
           data-cursor="pointer"
         >
           COMPARE
