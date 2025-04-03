@@ -17,6 +17,12 @@ const Dashboard = () => {
   const [whatsHappening, setWhatsHappening] = useState(STATEVARIABLES?.ENTERED);
   const [results, setResult] = useState([]);
 
+  // recent Results
+
+  const [recentResults, setRecentResults] = useState(() => {
+    const storedResults = localStorage.getItem("recentResults");
+    return storedResults ? JSON.parse(storedResults) : null;
+  });
   const [searchParams] = useSearchParams();
   const nav = useNavigate()
   useEffect(()=>{
@@ -68,7 +74,7 @@ const Dashboard = () => {
    };
 
   const handleNewResults = (value) =>{
-    console.log("new result values", value)
+    handleDashBoardState("whatsup", STATEVARIABLES?.SUCCESS);
     setResult(value);
   }
 
@@ -90,16 +96,15 @@ const Dashboard = () => {
         comparisonDiv.scrollIntoView({ behavior: "smooth" });
       }
       setWhatsHappening(STATEVARIABLES?.NEUTRAL);
+      
     }
-    console.log('incoming')
-  }, [whatsHappening]);
+  }, [whatsHappening, results]);
 
 
   return (
     <>
-      <section className="landing page text-white cursor-custom">
-        
-        <Toaster/>
+      <section className="landing page text-white cursor-custom ">
+        <Toaster />
         <Headder />
         <Hero
           usernames={usernames}
@@ -110,9 +115,13 @@ const Dashboard = () => {
           compareLoader={compareLoader}
           handleCompareLoader={handleCompareLoader}
           handleDashBoardState={handleDashBoardState}
+          recentResults={recentResults}
+          setRecentResults={setRecentResults}
+          results={results}
         />
-  
-        {whatsHappening == STATEVARIABLES?.ENTERED || whatsHappening == STATEVARIABLES?.FAILED ? (
+
+        {whatsHappening == STATEVARIABLES?.ENTERED ||
+        whatsHappening == STATEVARIABLES?.FAILED ? (
           <></>
         ) : (
           <>
