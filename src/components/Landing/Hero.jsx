@@ -26,7 +26,21 @@ const  Hero = () =>{
       >
         
         <div className="flex flex-col max-w-4xl text-center p-4 space-y-6">
-          
+          <div>NUMBER OF COMPARISONS</div>
+        <div className='flex items-center justify-center space-x-4'>
+          <div className='w-20 h-20 flex items-center justify-center text-3xl font-extrabold  rounded-lg text-white bg-black bg-opacity-20 font-mono'>
+            0
+          </div>
+          <div className='w-20 h-20 flex items-center justify-center text-3xl font-extrabold  rounded-lg text-white bg-black bg-opacity-20 font-mono'>
+            0
+          </div>
+          <div className='w-20 h-20 flex items-center justify-center text-3xl font-extrabold  rounded-lg text-white bg-black bg-opacity-20 font-mono'>
+            0
+          </div>
+          <div className='w-20 h-20 flex items-center justify-center text-3xl font-extrabold  rounded-lg text-white bg-black bg-opacity-20 font-mono'>
+            10
+          </div>
+        </div>
         <h1 className="text-[24px] sm:text-[32px] md:text-[48px] font-extrabold sm:font-normal">
           COMPARE YOUR COMPETITIVE PROGRAMMING SKILLS
         </h1>
