@@ -24,29 +24,29 @@ const Dashboard = () => {
     const storedResults = localStorage.getItem("recentResults");
     return storedResults ? JSON.parse(storedResults) : null;
   });
+
   const [searchParams] = useSearchParams();
   const nav = useNavigate()
+  
   useEffect(()=>{
     const access_token = searchParams.get("accessToken");
     if (access_token) {
       sessionStorage.setItem("access_token", access_token);
-      updateLoginStatus(true)
-      updateUserDetails(
-        {
-          name: searchParams.get("name"),
-          picture: searchParams.get("picture"),
-          email: searchParams.get("email")
-        }
-      )
-      nav('/dashboard')
-    }
-    else if (sessionStorage.getItem("access_token")==null){
-      window.location.href = '/'
+      updateLoginStatus(true);
+      updateUserDetails({
+        name: searchParams.get("name"),
+        picture: searchParams.get("picture"),
+        email: searchParams.get("email"),
+      });
+      nav("/dashboard");
+    } else if (sessionStorage.getItem("access_token") == null) {
+      window.location.href = "/";
     }
     // if (!isVerified) {
     //   window.location.href = "/";
     // }
-  }, [userDetails, isVerified]);
+    return () => {}; // Empty cleanup function
+  }, []);
 
   // Function to add a new input field (limit 5)
   const addUser = () => {
