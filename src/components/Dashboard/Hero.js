@@ -5,11 +5,9 @@ import close_icon from '../../assets/icons8-close-96.svg'
 import { fetchCompareUser } from "../../utils/platform.service";
 import toast, { Toaster } from 'react-hot-toast';
 import Loader from "../Loader";
-import left_arrow from '../../assets/left-arrow-side-nav.svg'
 import DashboardStyle from '../../styles/Dashboard.module.css';
 import { STATEVARIABLES, HISTORY_DATA } from "../../contexts/variables";
 import { MdDelete } from "react-icons/md";
-
 
 
 const Hero = ({
@@ -28,7 +26,7 @@ const Hero = ({
   // Function to compare usernames (placeholder for now)
 
   // const [scrollDownArrow, setSro]
-  const [type, setType] = useState("Friendly");
+  const [type, setType] = useState("Global");
   const [historyBar, setHistoryBar] = useState(false);
 
   // Comparing Users
@@ -42,20 +40,37 @@ const Hero = ({
 
     try {
       const userScores = await fetchCompareUser(newUsernames, type);
+      // Check if the response status is 413
+      if (userScores?.status === 413) {
+        console.log(
+          "Payload too large. Please reduce the size of the request."
+        );
+        toast.error(
+          "Payload too large. Please reduce the size of the request."
+        );
+        handleCompareLoader(false);
+        return;
+      }
+
       if (!userScores?.valid) {
+
         if (userScores?.status == 401) window.location.href = "/login";
         handleCompareLoader(false);
         handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
-        console.log("failed to fetch user scores");
         toast.error(userScores?.error);
         return;
       }
+      console.log("compare_results", userScores);
+
       handleNewResults(userScores?.data);
-      const storedResults =JSON.parse(localStorage.getItem("recentResults")) || [];
+      handleDashBoardState("compare_matrix", userScores?.additional_matrix);
+      const storedResults =
+      JSON.parse(localStorage.getItem("recentResults")) || [];
       const updatedResults = [userScores?.data, ...storedResults].slice(0, 5);
       localStorage.setItem("recentResults", JSON.stringify(updatedResults));
       setRecentResults(updatedResults);
       handleCompareLoader(false);
+
     } catch (err) {
       handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
       handleCompareLoader(false);
@@ -72,6 +87,7 @@ const Hero = ({
   const handleHistoryTab = useCallback(() => {
     setHistoryBar(!historyBar);
   }, [historyBar]);
+
 
   return (
     <>
@@ -151,7 +167,7 @@ const Hero = ({
         </div>
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
           {/* Platform Selection Buttons */}
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-row-reverse justify-around">
             <button
               className={`${
                 type == "Friendly" ? "primary-button" : " secondary-button"
@@ -174,7 +190,7 @@ const Hero = ({
             <h1 className="text-3xl">Enter The Usernames to Compare</h1>
           </div>
 
-          {/* Dynamic User Input Fields */}
+  
           <div className="flex flex-col space-y-4">
             {usernames.map((username, index) => (
               <div key={index} className="relative">
@@ -182,7 +198,10 @@ const Hero = ({
                   className="input-design"
                   placeholder={`Enter Leetcode Username ${index + 1}`}
                   value={username}
-                  onChange={(e) => handleUserChange(index, e.target.value)}
+                  maxLength={25}
+                  onChange={(e) => {
+                    handleUserChange(index, e.target.value);
+                  }}
                 />
                 <img
                   src={leetcode_icon}
@@ -200,7 +219,7 @@ const Hero = ({
             ))}
           </div>
 
-          {/* Buttons: Add User & Compare */}
+          {/* /* Buttons: Add User & Compare */} 
           <div className="grid grid-cols-2 space-x-4">
             <button
               onClick={addUser}

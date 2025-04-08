@@ -9,6 +9,7 @@ import Analytics from "../components/Dashboard/Analytics";
 import Headder from "../components/Headder";
 import { STATEVARIABLES, ERRORS } from "../contexts/variables";
 import toast, { Toaster } from "react-hot-toast";
+import DifferentMatrix from "../components/Dashboard/DifferentMetrix";
 
 const Dashboard = () => {
   const { userDetails, isVerified, updateLoginStatus, updateUserDetails } = useUserDetails();
@@ -16,7 +17,7 @@ const Dashboard = () => {
   const [usernames, setUsernames] = useState([""]);
   const [whatsHappening, setWhatsHappening] = useState(STATEVARIABLES?.ENTERED);
   const [results, setResult] = useState([]);
-
+  const [comparison_matrix, setComparisonMatrix] = useState([]);
   // recent Results
 
   const [recentResults, setRecentResults] = useState(() => {
@@ -86,6 +87,9 @@ const Dashboard = () => {
     if (key === "whatsup") {
       setWhatsHappening(state);
     }
+    if( key === "compare_matrix"){
+      setComparisonMatrix(state);
+    }
   }
 
 
@@ -136,6 +140,7 @@ const Dashboard = () => {
               results={results}
               compareLoader={compareLoader}
             />
+            <DifferentMatrix comparable_matrix={comparison_matrix} />
             <Footer />
           </>
         )}
