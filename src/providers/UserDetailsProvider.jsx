@@ -31,7 +31,7 @@ const UserDetailsProvider = ({ children }) => {
             email: loggedIn.user?.email || "",
           });
           setIsVerified(true);
-        }
+        } 
       } catch (error) {
         console.error("Error fetching user details:", error);
         setUserDetails(null);

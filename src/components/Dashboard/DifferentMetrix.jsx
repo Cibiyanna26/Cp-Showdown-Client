@@ -14,16 +14,16 @@ const DifferentMatrix = ({ comparable_matrix }) => {
   return (
     <>
       <div
-        className="flex md:min-h-screen px-4 py-6"
+        className="flex lg:min-h-screen px-4 py-6"
         style={{
           backgroundImage: `url(${mid_background})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto md:mt-[80px] mt-[40px]">
+        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto md:mt-[40px] mt-[20px]">
           <div className="flex flex-row justify-center items-center gap-[8px]">
-            <h1 className="text-center md:text-3xl sm:text-2xl text-xl font-bold">Wanna Know More?</h1>
+            <h1 className="text-center md:text-3xl text-2xl font-bold">Wanna Know More?</h1>
             <img src="https://i.imgur.com/b9NyUGm.png" className="w-[60px] h-[60px]"></img>
           </div>
           <div className="flex flex-row flex-wrap justify-around gap-x-4 gap-y-8">
