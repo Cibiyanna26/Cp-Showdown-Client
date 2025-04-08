@@ -71,7 +71,7 @@ const Comparision = ({ results }) => {
                           ></img> */}
                           <h1 className="text-green-500">#{value?.rank}</h1>
                           <img
-                            src={value?.profile?.profile?.userAvatar}
+                            src={value?.userAvatar}
                             className="w-[30px] h-[30px] rounded-full"
                             alt="user avatar"
                           ></img>

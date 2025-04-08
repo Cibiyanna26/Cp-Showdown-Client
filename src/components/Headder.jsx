@@ -21,9 +21,9 @@ const Headder = () => {
   return (
     <nav
       id="navbar"
-      className="fixed top-0 w-full z-50 border-b border-tertiary bg-secondary"
+      className="fixed top-0 w-full z-50 "
     >
-      <div className="flex items-center justify-between py-2 px-4 md:px-8">
+      <div className="flex items-center justify-between p-2 my-2 mx-4 md:mx-8 bg-secondary rounded-xl shadow-md">
         {/* Left Logo Section */}
         <div id="left-logo" className="flex items-center space-x-2">
           <img className="w-12 h-12" src={Logo} alt="Logo" />

@@ -88,11 +88,6 @@ const RadarChart = ({ usersData, focusedUser }) => {
     onLeave: () => setActiveDataset(null),
   };
 
-  // // Remove background color for radar chart datasets
-  // datasets.forEach(dataset => {
-  //   dataset.backgroundColor = "rgba(0, 0, 0, 0)";
-  // });
-
   useEffect(() =>{
     setActiveDataset(focusedUser)
   }, [focusedUser])

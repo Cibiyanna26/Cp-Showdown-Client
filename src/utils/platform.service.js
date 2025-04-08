@@ -26,7 +26,7 @@ const fetchCompareUser = async (usernames,type) => {
       }
     }
     console.log(res.status,data)
-    return { valid: true, data: data.data }; // Return the response data with a valid attribute
+    return { valid: true, data: data.data, additional_matrix: data?.comparable_matrix }; // Return the response data with a valid attribute
   } catch (error) {
     console.error("Failed to fetch comparison data:", error.message);
     return { valid: false, error: error.message }; // Return valid as false with the error message
