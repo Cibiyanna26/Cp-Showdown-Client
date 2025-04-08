@@ -73,6 +73,7 @@ const Comparision = ({ results }) => {
                           <img
                             src={value?.userAvatar}
                             className="w-[30px] h-[30px] rounded-full"
+                            alt="user avatar"
                           ></img>
                           <h1 className="md:text-lg text-sm">{value?.userId}</h1>
                         </div>

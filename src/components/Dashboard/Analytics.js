@@ -79,6 +79,7 @@ const Analytics = ({ results }) => {
                         <img
                           src={tick_icon_grd}
                           className="inline w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+                          alt="tick"
                         ></img>{" "}
                         {element.title}
                       </h1>
