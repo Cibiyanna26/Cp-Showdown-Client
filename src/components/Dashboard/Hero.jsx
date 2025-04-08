@@ -25,13 +25,12 @@ const Hero = ({
 }) => {
   // Function to compare usernames (placeholder for now)
 
-  // const [scrollDownArrow, setSro]
-  const [type, setType] = useState("Global");
   const [historyBar, setHistoryBar] = useState(false);
 
   // Comparing Users
 
   const compareUsers = async () => {
+
     handleCompareLoader(true);
     const newUsernames = [];
     usernames.forEach((values, index) => {
@@ -39,7 +38,7 @@ const Hero = ({
     });
 
     try {
-      const userScores = await fetchCompareUser(newUsernames, type);
+      const userScores = await fetchCompareUser(newUsernames);
       // Check if the response status is 413
       if (userScores?.status === 413) {
         console.log(
@@ -60,7 +59,6 @@ const Hero = ({
         toast.error(userScores?.error);
         return;
       }
-      console.log("compare_results", userScores);
 
       handleNewResults(userScores?.data);
       handleDashBoardState("compare_matrix", userScores?.additional_matrix);
@@ -92,7 +90,7 @@ const Hero = ({
   return (
     <>
       <div
-        className="flex justify-center min-h-screen pt-[100px] relative"
+        className="flex justify-center min-h-screen pt-[100px] relative items-center"
         style={{
           backgroundImage: `url(${background_image})`,
           backgroundSize: "cover",
@@ -166,26 +164,6 @@ const Hero = ({
           )}
         </div>
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
-          {/* Platform Selection Buttons */}
-          <div className="flex flex-row-reverse justify-around">
-            <button
-              className={`${
-                type == "Friendly" ? "primary-button" : " secondary-button"
-              }`}
-              onClick={() => type !== "Friendly" && setType("Friendly")}
-            >
-              Friendly
-            </button>
-            <button
-              className={`${
-                type == "Global" ? "primary-button" : " secondary-button"
-              }`}
-              onClick={() => type !== "Global" && setType("Global")}
-            >
-              Global
-            </button>
-          </div>
-
           <div className="text-center">
             <h1 className="text-3xl">Enter The Usernames to Compare</h1>
           </div>

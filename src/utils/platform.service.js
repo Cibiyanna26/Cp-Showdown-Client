@@ -1,11 +1,10 @@
 import { BACKEND_LOCAL_HOST, BACKEND_URL } from "../contexts/variables";
 
-const fetchCompareUser = async (usernames,type) => {
+const fetchCompareUser = async (usernames) => {
   try {
     const accessToken = sessionStorage.getItem("access_token"); // Retrieve access token from local storage
-    console.log(`${BACKEND_LOCAL_HOST}/protected-route/compare${type}`)
     const res = await fetch(
-      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/compare${type}`,
+      `${BACKEND_URL || BACKEND_LOCAL_HOST}/protected-route/compareGlobal`,
       {
         method: "POST",
         headers: {
@@ -25,7 +24,7 @@ const fetchCompareUser = async (usernames,type) => {
         error:data.error
       }
     }
-    console.log(res.status,data)
+
     return { valid: true, data: data.data, additional_matrix: data?.comparable_matrix }; // Return the response data with a valid attribute
   } catch (error) {
     console.error("Failed to fetch comparison data:", error.message);
