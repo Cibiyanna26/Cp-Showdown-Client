@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import background_image from "../../assets/landing-background-cross.png";
 import leetcode_icon from "../../assets/leetcode.svg";
 import close_icon from '../../assets/icons8-close-96.svg'
 import { fetchCompareUser } from "../../utils/platform.service";
 import toast, { Toaster } from 'react-hot-toast';
 import Loader from "../Loader";
-import look_down_arrow from "../../assets/look-down.svg";
-import { STATEVARIABLES } from "../../contexts/variables";
+import DashboardStyle from '../../styles/Dashboard.module.css';
+import { STATEVARIABLES, HISTORY_DATA } from "../../contexts/variables";
+import { MdDelete } from "react-icons/md";
+
+
 const Hero = ({
   usernames,
   addUser,
@@ -15,15 +18,21 @@ const Hero = ({
   handleNewResults,
   compareLoader,
   handleCompareLoader,
-  handleDashBoardState
+  handleDashBoardState,
+  recentResults,
+  setRecentResults,
+  results
 }) => {
   // Function to compare usernames (placeholder for now)
 
   // const [scrollDownArrow, setSro]
-  const [type,setType] = useState('Friendly')
+  const [type, setType] = useState("Global");
+  const [historyBar, setHistoryBar] = useState(false);
+
+  // Comparing Users
+
   const compareUsers = async () => {
     handleCompareLoader(true);
-
     const newUsernames = [];
     usernames.forEach((values, index) => {
       newUsernames.push(values?.trim());
@@ -31,24 +40,54 @@ const Hero = ({
 
     try {
       const userScores = await fetchCompareUser(newUsernames, type);
+      // Check if the response status is 413
+      if (userScores?.status === 413) {
+        console.log(
+          "Payload too large. Please reduce the size of the request."
+        );
+        toast.error(
+          "Payload too large. Please reduce the size of the request."
+        );
+        handleCompareLoader(false);
+        return;
+      }
+
       if (!userScores?.valid) {
-        if(userScores?.status==401) window.location.href = '/login'
+
+        if (userScores?.status == 401) window.location.href = "/login";
         handleCompareLoader(false);
         handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
-        console.log("failed to fetch user scores");
         toast.error(userScores?.error);
         return;
       }
-      handleDashBoardState("whatsup", STATEVARIABLES?.SUCCESS);
+      console.log("compare_results", userScores);
+
       handleNewResults(userScores?.data);
+      handleDashBoardState("compare_matrix", userScores?.additional_matrix);
+      const storedResults =
+      JSON.parse(localStorage.getItem("recentResults")) || [];
+      const updatedResults = [userScores?.data, ...storedResults].slice(0, 5);
+      localStorage.setItem("recentResults", JSON.stringify(updatedResults));
+      setRecentResults(updatedResults);
       handleCompareLoader(false);
 
     } catch (err) {
-      handleDashBoardState('whatsup', STATEVARIABLES?.FAILED);
+      handleDashBoardState("whatsup", STATEVARIABLES?.FAILED);
       handleCompareLoader(false);
       console.log("Error:", err);
     }
   };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem("recentResults");
+    setRecentResults([]);
+    toast.success("History cleared successfully!");
+  };
+
+  const handleHistoryTab = useCallback(() => {
+    setHistoryBar(!historyBar);
+  }, [historyBar]);
+
 
   return (
     <>
@@ -61,9 +100,74 @@ const Hero = ({
         }}
       >
         <Toaster />
+
+        <div
+          className={`${DashboardStyle.historyTab} transition-all duration-300`}
+        >
+          {/* History Tab Open and Close Button */}
+          <div
+            className={`flex flex-row justify-end ${DashboardStyle.historyTriggerButton}`}
+          >
+            <button
+              className={`${DashboardStyle.historyOpen} mb-2`}
+              onClick={() => {
+                handleHistoryTab();
+              }}
+            >
+              <span>{historyBar == false ? "<" : "x"}</span>
+              {/* <span className="lg:inline hidden">History</span> */}
+            </button>
+          </div>
+
+          {historyBar == false ? (
+            <></>
+          ) : (
+            <>
+              <div className={` ${DashboardStyle.historyResults}`}>
+                <h1 className="text-xl text-center">History Of Prev 5</h1>
+                <div className={`${DashboardStyle.historyCol}`}>
+                  {recentResults.length > 0 ? (
+                    recentResults.map((data, index) => {
+                      return (
+                        <>
+                          <button
+                            className={`${DashboardStyle.eachHistory}`}
+                            onClick={() => {
+                              handleNewResults(data);
+                            }}
+                          >
+                            <span className="text-blue-500">#1</span>
+                            <span className="text-yellow-500">
+                              {data[0]?.userId}
+                            </span>
+                            <span>{data?.day}</span>
+                          </button>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <div className="flex flex-1 items-center justify-center text-yellow-400">
+                      <h1>No comparisions ^-^</h1>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-row justify-end">
+                  <button
+                    className="p-[8px] rounded-xl text-red-600 hover:bg-secondary text-[20px]"
+                    onClick={() => {
+                      clearLocalStorage();
+                    }}
+                  >
+                    <MdDelete />
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
         <div className="w-[600px] mx-auto flex flex-col space-y-8 p-[16px] relative">
           {/* Platform Selection Buttons */}
-          <div className="flex flex-row justify-around">
+          <div className="flex flex-row-reverse justify-around">
             <button
               className={`${
                 type == "Friendly" ? "primary-button" : " secondary-button"
@@ -86,15 +190,18 @@ const Hero = ({
             <h1 className="text-3xl">Enter The Usernames to Compare</h1>
           </div>
 
-          {/* Dynamic User Input Fields */}
+  
           <div className="flex flex-col space-y-4">
             {usernames.map((username, index) => (
-              <div key={index} className="relative" >
+              <div key={index} className="relative">
                 <input
                   className="input-design"
                   placeholder={`Enter Leetcode Username ${index + 1}`}
                   value={username}
-                  onChange={(e) => handleUserChange(index, e.target.value)}
+                  maxLength={25}
+                  onChange={(e) => {
+                    handleUserChange(index, e.target.value);
+                  }}
                 />
                 <img
                   src={leetcode_icon}
@@ -112,7 +219,7 @@ const Hero = ({
             ))}
           </div>
 
-          {/* Buttons: Add User & Compare */}
+          {/* /* Buttons: Add User & Compare */} 
           <div className="grid grid-cols-2 space-x-4">
             <button
               onClick={addUser}
@@ -131,6 +238,8 @@ const Hero = ({
               <Loader />
             )}
           </div>
+
+          {/*  */}
         </div>
       </div>
     </>

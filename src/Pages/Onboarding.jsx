@@ -78,7 +78,7 @@ const Onboarding = () => {
                  text-white text-center
                  "
           >
-            <img src={Logo} className="w-[80px] h-[80px] "></img>
+            <img src={Logo} className="w-[80px] h-[80px] " alt="Logo"></img>
             <h1 className="text-3xl font-bold stroke-secondary">
               Fill In Your Username
             </h1>
@@ -106,6 +106,7 @@ const Onboarding = () => {
               <img
                 src={codeforces_icon}
                 className="absolute top-3 left-5 w-[30px] h-[30px]"
+                alt="Codeforces"
               ></img>
             </div>
             <button
