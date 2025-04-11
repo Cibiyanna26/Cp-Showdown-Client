@@ -1,5 +1,6 @@
 const BACKEND_LOCAL_HOST = 'http://localhost:5000/v1';
 const BACKEND_URL = "https://cp-showdown-server.vercel.app/v1";
+// const BACKEND_URL = "http://localhost:5000/v1";
 
 const STATEVARIABLES = {
  ENTERED :'ENTERED',
@@ -47,4 +48,50 @@ const COLORS = [
   }, // Dark Orange
 ];
 
-export { BACKEND_LOCAL_HOST, STATEVARIABLES, ERRORS, COLORS, BACKEND_URL };
+const HISTORY_DATA = [
+  {
+    rank: 1,
+    title: "The Great Algorithm Showdown",
+    ratio: "1/100",
+    day: "11th Jan",
+  },
+  {
+    rank: 2,
+    title: "Battle of the Binary Trees",
+    ratio: "2/100",
+    day: "11th Jan",
+  },
+  {
+    rank: 3,
+    title: "Sorting Saga: Quick vs Merge",
+    ratio: "3/100",
+    day: "11th Jan",
+  },
+  {
+    rank: 4,
+    title: "Dynamic Programming Duel",
+    ratio: "4/100",
+    day: "11th Jan",
+  },
+  {
+    rank: 3,
+    title: "Sorting Saga: Quick vs Merge",
+    ratio: "3/100",
+    day: "11th Jan",
+  },
+  {
+    rank: 4,
+    title: "Dynamic Programming Duel",
+    ratio: "4/100",
+    day: "11th Jan",
+  },
+];
+
+export {
+  BACKEND_LOCAL_HOST,
+  STATEVARIABLES,
+  ERRORS,
+  COLORS,
+  HISTORY_DATA,
+  BACKEND_URL,
+};

@@ -19,8 +19,10 @@ const Analytics = ({ results }) => {
         }}
         id="analytics-section"
       >
-        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto md:mt-[80px] mt-[40px]">
+        <div className="flex flex-col space-y-4 w-full max-w-[900px] mx-auto md:mt-[40px] mt-[20px]">
           {/* User Selection Buttons */}
+          <h1 className="text-3xl font-bold text-center">Analytics</h1>
+          <p className="text-center text-gray-400">7 different Comparisions</p>
           <div className="border-b border-tertiary flex flex-wrap justify-around p-[8px] mb-[40px]">
             {results &&
               results.map((value, index) => {
@@ -59,7 +61,10 @@ const Analytics = ({ results }) => {
                         key={index}
                         className=""
                         style={{
-                          color: focusedUser === index ? COLORS[index].activeBackground : COLORS[index].background,
+                          color:
+                            focusedUser === index
+                              ? COLORS[index].activeBackground
+                              : COLORS[index].background,
                         }}
                       >
                         {value?.score || "Unknown User"}
@@ -79,6 +84,7 @@ const Analytics = ({ results }) => {
                         <img
                           src={tick_icon_grd}
                           className="inline w-[30px] h-[30px] md:w-[40px] md:h-[40px]"
+                          alt="tick"
                         ></img>{" "}
                         {element.title}
                       </h1>
