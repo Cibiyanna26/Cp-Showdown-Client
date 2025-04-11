@@ -3,8 +3,13 @@ import left_shiba from '../../assets/shibainu/shiba_left-removebg-preview.png'
 import cat_image from '../../assets/shibainu/cat_toung-removebg-preview.png'
 import boxer_shiba from '../../assets/shibainu/body_builing_shiba-removebg-preview.png'
 import headphone_cat from '../../assets/shibainu/cat_head_phone-removebg-preview.png'
-
+import { useState } from 'react';
 const WhatWeOffer = () => {
+  const [fallText, setFallText] = useState(false);
+
+  const handleBoxerClick = () => {
+    setFallText(true);
+  };
     return (
       <>
         <div
@@ -16,7 +21,7 @@ const WhatWeOffer = () => {
           }}
         >
           <div className="max-w-7xl flex flex-col items-center mt-16 space-y-6">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary text-center">
+            <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary text-center ${fallText ? 'fall' : ''}`}>
               What We Offer
             </h1>
             <div className="flex flex-wrap justify-center gap-8">
@@ -30,22 +35,22 @@ const WhatWeOffer = () => {
               >
                 <div className="flex flex-1 flex-row space-x-4 items-center justify-center opacity-80">
                   <img
-                    className="w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform -rotate-45"
+                    className={`${fallText ? 'fall' : ''} w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform -rotate-45`}
                     src={left_shiba}
                     alt="Left Shiba"
                   />
-                  <h1 className="font-bold text-2xl sm:text-3xl">vs</h1>
+                  <h1 className={`${fallText ? 'fall' : ''} font-bold text-2xl sm:text-3xl`}>vs</h1>
                   <img
-                    className="w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform rotate-45"
+                    className={`${fallText ? 'fall' : ''} w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform rotate-45`}
                     src={cat_image}
                     alt="Cat"
                   />
                 </div>
                 <div className="space-y-4">
-                  <h1 className="text-center font-bold text-xl sm:text-2xl md:text-3xl">
+                  <h1 className={`${fallText ? 'fall' : ''} text-center font-bold text-xl sm:text-2xl md:text-3xl`}>
                     Friends Showdown
                   </h1>
-                  <p className="text-sm sm:text-base opacity-80">
+                  <p className={`${fallText ? 'fall' : ''} text-sm sm:text-base opacity-80 `}>
                     Have a Showdown Contest with your friends and know your
                     friends' scores.
                   </p>
@@ -61,23 +66,23 @@ const WhatWeOffer = () => {
                 }}
               >
                 <div className="flex flex-1 flex-row space-x-4 items-center justify-center opacity-80">
-                  <img
-                    className="w-[150px] sm:w-[150px] md:w-[180px] h-[150px] sm:h-[180px] md:h-[200px] transform"
+                  <img onClick={handleBoxerClick}
+                    className={`cursor-pointer transition-all duration-500 transform ${fallText ? 'scale-125' : 'scale-100'} w-[150px] sm:w-[150px] md:w-[180px] h-[150px] sm:h-[180px] md:h-[200px]`}
                     src={boxer_shiba}
                     alt="Boxer Shiba"
                   />
-                  <h1 className="font-bold text-2xl sm:text-3xl">vs</h1>
+                  <h1 className={`font-bold text-2xl sm:text-3xl ${fallText ? 'fall' : ''}`}>vs</h1>
                   <img
-                    className="w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform -rotate-45"
+                    className={`${fallText ? 'fall' : ''} w-[100px] sm:w-[120px] md:w-[150px] h-[100px] sm:h-[120px] md:h-[150px] transform -rotate-45`}
                     src={headphone_cat}
                     alt="Headphone Cat"
                   />
                 </div>
                 <div className="space-y-4">
-                  <h1 className="text-center font-bold text-xl sm:text-2xl md:text-3xl">
+                  <h1 className={`${fallText ? 'fall' : ''} text-center font-bold text-xl sm:text-2xl md:text-3xl`}>
                     World Showdown
                   </h1>
-                  <p className="text-sm sm:text-base opacity-80">
+                  <p className={`${fallText ? 'fall' : ''} text-sm sm:text-base opacity-80`}>
                     Have a Showdown Contest by comparing with world highest
                     scores and know your World' scores.
                   </p>
@@ -86,6 +91,27 @@ const WhatWeOffer = () => {
             </div>
           </div>
         </div>
+        <style jsx="true">{`
+        .fall {
+          animation: fallDown 0.6s ease forwards;
+        }
+
+        @keyframes fallDown {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+          }
+          60% {
+            transform: translateY(60px) rotate(10deg);
+            opacity: 0.6;
+          }
+          100% {
+            transform: translateY(200px) rotate(30deg);
+            opacity: 0;
+            pointer-events: none;
+          }
+        }
+      `}</style>
       </>
     );
 };

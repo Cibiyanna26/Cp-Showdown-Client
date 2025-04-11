@@ -55,7 +55,7 @@ const Headder = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-4 py-2 bg-blue-500 rounded-md text-white text-sm md:text-base"
+                className="px-4 py-2 hover:text-blue-900 bg-blue-500 rounded-md text-white text-sm md:text-base"
               >
                 Log In
               </Link>
