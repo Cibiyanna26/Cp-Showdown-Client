@@ -1,18 +1,18 @@
 .barChartCard{
-    padding: 12px;
     border-radius: 1rem; /* Rounded corners */
     position: relative;
-    border: 1px solid #777;
+    border: 1px solid rgb(235, 229, 229);
     transition: all 0.3s ease;
-    box-shadow: #777 0px 5px 0px 0px;
+    box-shadow: rgb(235, 229, 229) 0px 5px 0px 0px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap:16px;
+    gap:24px;
+    padding: 12px;
 }
 
 .barChartCard:hover {
-    box-shadow: #777 0px 7px 0px 0px;
+    box-shadow: rgb(235, 229, 229) 0px 7px 0px 0px;
 }
 
 /* .historyOpen:active {
