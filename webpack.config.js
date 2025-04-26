@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "development", // Change to "production" for production builds
-  entry: "./src/index.js", // Change the entry point if needed
+  entry: "./src/index.tsx", // Change the entry point if needed
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -55,6 +55,6 @@ module.exports = {
     hot: true, // Enables hot module replacement
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx",".ts",".tsx"],
   },
 };

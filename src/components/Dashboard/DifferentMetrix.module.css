@@ -1,0 +1,24 @@
+.barChartCard{
+    border-radius: 1rem; /* Rounded corners */
+    position: relative;
+    border: 1px solid rgb(235, 229, 229);
+    transition: all 0.3s ease;
+    box-shadow: rgb(235, 229, 229) 0px 5px 0px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap:24px;
+    padding: 12px;
+}
+
+.barChartCard:hover {
+    box-shadow: rgb(235, 229, 229) 0px 7px 0px 0px;
+}
+
+/* .historyOpen:active {
+    background-color: #4D065B; */
+    /*50, 168, 80*/
+    /* box-shadow: #A306BE 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+} */
